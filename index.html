@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kioku Lite — Zero-Docker Memory Engine for AI Agents</title>
+  <meta name="description" content="Personal memory engine for AI agents. Tri-hybrid search (BM25 + Vector + Knowledge Graph) powered by SQLite. Zero Docker, zero cloud LLM. Just pip install." />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:        '#0F172A',
+            surface:   '#1E293B',
+            muted:     '#334155',
+            accent:    '#22C55E',
+            'accent-dim': '#16A34A',
+            text:      '#F8FAFC',
+            'text-muted': '#94A3B8',
+            border:    '#334155',
+          },
+          fontFamily: {
+            mono: ['"Space Mono"', 'Courier New', 'monospace'],
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.6s ease-out forwards',
+            'blink':   'blink 1.2s step-end infinite',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%':   { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            blink: {
+              '0%, 100%': { opacity: '1' },
+              '50%':      { opacity: '0' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+
+  <!-- Space Mono font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    body { font-family: 'Space Mono', monospace; }
+
+    /* Terminal-style blinking cursor */
+    .cursor::after {
+      content: '_';
+      animation: blink 1.2s step-end infinite;
+      color: #22C55E;
+    }
+
+    /* Subtle grid background */
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    /* Code block styling */
+    .code-block {
+      background: #0D1117;
+      border: 1px solid #22C55E33;
+      border-radius: 6px;
+    }
+
+    /* Animate on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .cursor::after { animation: none; transition: none; }
+    }
+  </style>
+</head>
+
+<body class="bg-bg text-text font-mono grid-bg min-h-screen antialiased">
+
+  <!-- ─── NAVBAR ───────────────────────────────────────────────────── -->
+  <nav class="fixed top-4 left-4 right-4 z-50 flex items-center justify-between
+              bg-surface/80 backdrop-blur-sm border border-border/50
+              rounded-xl px-5 py-3 max-w-5xl mx-auto">
+    <!-- Logo -->
+    <a href="#" class="flex items-center gap-2 cursor-pointer group" aria-label="Kioku Lite home">
+      <svg viewBox="0 0 24 24" class="w-6 h-6 text-accent" fill="none" stroke="currentColor"
+           stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+        <path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/>
+        <path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
+      </svg>
+      <span class="font-bold text-sm tracking-widest text-text group-hover:text-accent
+                   transition-colors duration-200">
+        kioku<span class="text-accent">-lite</span>
+      </span>
+    </a>
+
+    <!-- Nav links -->
+    <div class="hidden sm:flex items-center gap-6 text-xs text-text-muted">
+      <a href="#features" class="hover:text-accent transition-colors duration-200 cursor-pointer">features</a>
+      <a href="#how-it-works" class="hover:text-accent transition-colors duration-200 cursor-pointer">how it works</a>
+      <a href="#quickstart" class="hover:text-accent transition-colors duration-200 cursor-pointer">quickstart</a>
+    </div>
+
+    <!-- GitHub CTA -->
+    <a href="https://github.com/phuc-nt/kioku-agent-kit-lite"
+       target="_blank" rel="noopener noreferrer"
+       class="flex items-center gap-2 bg-accent hover:bg-accent-dim text-bg
+              text-xs font-bold px-4 py-2 rounded-lg transition-colors duration-200
+              cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2
+              focus-visible:ring-offset-bg"
+       aria-label="View on GitHub">
+      <!-- GitHub icon -->
+      <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor" aria-hidden="true">
+        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483
+                 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466
+                 -.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832
+                 .092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688
+                 -.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004
+                 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651
+                 .64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855
+                 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017
+                 C22 6.484 17.522 2 12 2z"/>
+      </svg>
+      GitHub
+    </a>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────────────────────────── -->
+  <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 bg-accent/10 border border-accent/30
+                text-accent text-xs px-4 py-1.5 rounded-full mb-8 reveal">
+      <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" aria-hidden="true"></span>
+      v0.1.3 · Zero Docker · Zero Cloud LLM
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-6 reveal">
+      Your AI agent's memory.<br/>
+      <span class="text-accent">Zero Docker<span class="cursor"></span></span>
+    </h1>
+
+    <!-- Sub-headline -->
+    <p class="text-text-muted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10 reveal"
+       style="line-height: 1.75;">
+      Tri-hybrid search (BM25 + Vector + Knowledge Graph) in a single SQLite file.
+      No ChromaDB, no FalkorDB, no servers.
+      Just <code class="bg-surface px-2 py-0.5 rounded text-accent text-sm">pip install</code>.
+    </p>
+
+    <!-- Install command -->
+    <div class="code-block inline-flex items-center gap-4 px-6 py-4 mx-auto mb-10 text-left reveal">
+      <span class="text-text-muted text-sm select-none" aria-hidden="true">$</span>
+      <code class="text-accent text-sm sm:text-base tracking-wide select-all"
+            aria-label="Install command">
+        pip install "kioku-lite[cli]"
+      </code>
+      <button
+        onclick="copyInstall(this)"
+        class="ml-2 p-1.5 rounded hover:bg-surface cursor-pointer transition-colors duration-200
+               text-text-muted hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
+        aria-label="Copy install command">
+        <!-- Copy icon -->
+        <svg id="icon-copy" viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2"/>
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- CTA buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
+      <a href="#quickstart"
+         class="bg-accent hover:bg-accent-dim text-bg font-bold px-8 py-3 rounded-lg
+                text-sm transition-colors duration-200 cursor-pointer
+                focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2
+                focus-visible:ring-offset-bg">
+        Get Started →
+      </a>
+      <a href="#how-it-works"
+         class="border border-border hover:border-accent text-text-muted hover:text-accent
+                font-bold px-8 py-3 rounded-lg text-sm transition-colors duration-200
+                cursor-pointer focus-visible:ring-2 focus-visible:ring-accent">
+        How it works
+      </a>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="flex flex-wrap justify-center gap-8 mt-16 pt-8 border-t border-border/50 reveal">
+      <div class="text-center">
+        <p class="text-2xl font-bold text-accent">1.2s</p>
+        <p class="text-xs text-text-muted mt-1">avg. search latency</p>
+      </div>
+      <div class="text-center">
+        <p class="text-2xl font-bold text-accent">1 file</p>
+        <p class="text-xs text-text-muted mt-1">SQLite database</p>
+      </div>
+      <div class="text-center">
+        <p class="text-2xl font-bold text-accent">0</p>
+        <p class="text-xs text-text-muted mt-1">Docker containers</p>
+      </div>
+      <div class="text-center">
+        <p class="text-2xl font-bold text-accent">149+</p>
+        <p class="text-xs text-text-muted mt-1">tests passing</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FEATURES ─────────────────────────────────────────────────── -->
+  <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <p class="text-accent text-xs tracking-widest mb-3">// ARCHITECTURE</p>
+      <h2 class="text-3xl sm:text-4xl font-bold">Tri-hybrid search.<br/>All in SQLite.</h2>
+      <p class="text-text-muted mt-4 text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
+        Three search backends — one lightweight file. No external services,
+        no port conflicts, no Docker overhead.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <!-- BM25 -->
+      <div class="bg-surface border border-border hover:border-accent/50 rounded-xl p-6
+                  transition-colors duration-200 cursor-default reveal">
+        <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4"
+             aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 text-accent" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-sm mb-2">BM25 Keyword Search</h3>
+        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
+          SQLite FTS5 virtual table. Fast exact-match retrieval. Handles Vietnamese
+          and special characters safely.
+        </p>
+        <div class="mt-4 inline-block bg-bg px-3 py-1 rounded-md text-xs text-text-muted border border-border">
+          SQLite FTS5
+        </div>
+      </div>
+
+      <!-- Vector -->
+      <div class="bg-surface border border-border hover:border-accent/50 rounded-xl p-6
+                  transition-colors duration-200 cursor-default reveal">
+        <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4"
+             aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 text-accent" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-sm mb-2">Vector Semantic Search</h3>
+        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
+          sqlite-vec extension + FastEmbed ONNX (multilingual-e5-large, 1024-dim).
+          Fully offline, no Ollama daemon required.
+        </p>
+        <div class="mt-4 inline-block bg-bg px-3 py-1 rounded-md text-xs text-text-muted border border-border">
+          sqlite-vec + FastEmbed
+        </div>
+      </div>
+
+      <!-- Knowledge Graph -->
+      <div class="bg-surface border border-border hover:border-accent/50 rounded-xl p-6
+                  transition-colors duration-200 cursor-default reveal">
+        <div class="w-10 h-10 bg-accent/10 rounded-lg flex items-center justify-center mb-4"
+             aria-hidden="true">
+          <svg viewBox="0 0 24 24" class="w-5 h-5 text-accent" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+            <path d="M8.59 13.51l6.83 3.98M15.41 10.49L8.59 6.51"/>
+          </svg>
+        </div>
+        <h3 class="font-bold text-sm mb-2">Knowledge Graph</h3>
+        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
+          Pure Python BFS on SQLite tables. Entities, relationships, aliases.
+          No FalkorDB, no Cypher. Just SQL.
+        </p>
+        <div class="mt-4 inline-block bg-bg px-3 py-1 rounded-md text-xs text-text-muted border border-border">
+          SQLite + BFS
+        </div>
+      </div>
+    </div>
+
+    <!-- RRF Reranker callout -->
+    <div class="mt-8 bg-surface/50 border border-accent/20 rounded-xl p-6 text-center reveal">
+      <p class="text-xs text-text-muted mb-2 tracking-widest">// FUSION</p>
+      <p class="text-sm font-bold">
+        All 3 results fused via
+        <span class="text-accent">Reciprocal Rank Fusion (RRF)</span>
+        — best of keyword, semantic, and graph in every query.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ──────────────────────────────────────────────── -->
+  <section id="how-it-works" class="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+    <div class="text-center mb-16 reveal">
+      <p class="text-accent text-xs tracking-widest mb-3">// WORKFLOW</p>
+      <h2 class="text-3xl sm:text-4xl font-bold">Agent-driven design.</h2>
+      <p class="text-text-muted mt-4 text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
+        Kioku Lite stores what <em>you</em> provide. No built-in LLM calls.
+        The agent extracts entities from its own context — no extra API costs.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <!-- Step 1: Save -->
+      <div class="reveal">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-7 h-7 bg-accent text-bg text-xs font-bold rounded-full
+                       flex items-center justify-center shrink-0" aria-hidden="true">1</span>
+          <h3 class="font-bold text-sm">Save a memory</h3>
+        </div>
+        <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
+          <p class="text-text-muted mb-2 select-none">$ kioku-lite save \</p>
+          <p class="text-text pl-4">"Met Hùng at the TBV office today" \</p>
+          <p class="text-text pl-4">--mood happy --tags work,people</p>
+          <p class="text-text-muted mt-3">→ returns:</p>
+          <p class="text-accent pl-4">"content_hash": "a3f7b2..."</p>
+          <p class="text-text-muted pl-4">"hint": "Run kg-index to add KG entries"</p>
+        </div>
+      </div>
+
+      <!-- Step 2: kg-index -->
+      <div class="reveal">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-7 h-7 bg-accent text-bg text-xs font-bold rounded-full
+                       flex items-center justify-center shrink-0" aria-hidden="true">2</span>
+          <h3 class="font-bold text-sm">Index entities (agent-driven)</h3>
+        </div>
+        <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
+          <p class="text-text-muted mb-2 select-none">$ kioku-lite kg-index a3f7b2 \</p>
+          <p class="text-text pl-4">--entities '[</p>
+          <p class="text-text pl-8">{"name":"Hùng","type":"PERSON"},</p>
+          <p class="text-text pl-8">{"name":"TBV","type":"ORGANIZATION"}</p>
+          <p class="text-text pl-4">]' \</p>
+          <p class="text-text pl-4">--relationships '[</p>
+          <p class="text-text pl-8">{"source":"Hùng","target":"TBV",</p>
+          <p class="text-text pl-8"> "rel_type":"WORKS_AT","weight":0.9}</p>
+          <p class="text-text pl-4">]'</p>
+        </div>
+      </div>
+
+      <!-- Step 3: Search -->
+      <div class="reveal">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-7 h-7 bg-accent text-bg text-xs font-bold rounded-full
+                       flex items-center justify-center shrink-0" aria-hidden="true">3</span>
+          <h3 class="font-bold text-sm">Search — tri-hybrid</h3>
+        </div>
+        <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
+          <p class="text-text-muted mb-2 select-none">$ kioku-lite search "Hùng" \</p>
+          <p class="text-text pl-4">--entities "Hùng"</p>
+          <p class="text-text-muted mt-3">→ returns:</p>
+          <p class="text-accent pl-4">"results": [ ... ]</p>
+          <p class="text-text-muted pl-4">"graph_context": {</p>
+          <p class="text-text-muted pl-8">"nodes": [{"name":"TBV",...}],</p>
+          <p class="text-text-muted pl-8">"evidence": [...]</p>
+          <p class="text-text-muted pl-4">}</p>
+        </div>
+      </div>
+
+      <!-- Step 4: Recall -->
+      <div class="reveal">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-7 h-7 bg-accent text-bg text-xs font-bold rounded-full
+                       flex items-center justify-center shrink-0" aria-hidden="true">4</span>
+          <h3 class="font-bold text-sm">Recall & Explain</h3>
+        </div>
+        <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
+          <p class="text-text-muted mb-2 select-none"># Graph traversal</p>
+          <p class="text-text">$ kioku-lite recall "Hùng" --hops 2</p>
+          <p class="text-text-muted mt-3 mb-2 select-none"># Shortest path</p>
+          <p class="text-text">$ kioku-lite connect "Hùng" "TBV"</p>
+          <p class="text-text-muted mt-3 mb-2 select-none"># Timeline</p>
+          <p class="text-text">$ kioku-lite timeline --from 2026-01-01</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── QUICK START ───────────────────────────────────────────────── -->
+  <section id="quickstart" class="py-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <p class="text-accent text-xs tracking-widest mb-3">// QUICK START</p>
+      <h2 class="text-3xl sm:text-4xl font-bold">Up and running in 2 minutes.</h2>
+    </div>
+
+    <!-- Steps -->
+    <div class="space-y-6">
+      <div class="reveal">
+        <p class="text-xs text-text-muted mb-2 tracking-widest">01 — INSTALL</p>
+        <div class="code-block p-5">
+          <p class="text-text-muted text-xs select-none mb-1">$ <span class="text-text">pip install "kioku-lite[cli]"</span></p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <p class="text-xs text-text-muted mb-2 tracking-widest">02 — FIRST-TIME SETUP (downloads model ~1.1GB once)</p>
+        <div class="code-block p-5">
+          <p class="text-text-muted text-xs select-none mb-1">$ <span class="text-text">kioku-lite setup</span></p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <p class="text-xs text-text-muted mb-2 tracking-widest">03 — INTEGRATE WITH CLAUDE CODE</p>
+        <div class="code-block p-5">
+          <p class="text-text-muted text-xs select-none mb-1">$ <span class="text-text">kioku-lite init --global</span></p>
+          <p class="text-text-muted text-xs mt-2 pl-4"># Installs SKILL.md → ~/.claude/skills/kioku-lite/</p>
+          <p class="text-text-muted text-xs pl-4"># Claude Code picks it up in every project</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <p class="text-xs text-text-muted mb-2 tracking-widest">04 — START REMEMBERING</p>
+        <div class="code-block p-5">
+          <p class="text-text-muted text-xs select-none mb-1">$ <span class="text-text">kioku-lite save "First memory"</span></p>
+          <p class="text-text-muted text-xs select-none mt-1 mb-1">$ <span class="text-text">kioku-lite search "first"</span></p>
+          <p class="text-text-muted text-xs select-none mt-1">$ <span class="text-text">kioku-lite timeline</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 text-center reveal">
+      <a href="https://github.com/phuc-nt/kioku-agent-kit-lite"
+         target="_blank" rel="noopener noreferrer"
+         class="inline-flex items-center gap-3 bg-accent hover:bg-accent-dim
+                text-bg font-bold px-8 py-4 rounded-lg text-sm
+                transition-colors duration-200 cursor-pointer
+                focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2
+                focus-visible:ring-offset-bg">
+        <svg viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor" aria-hidden="true">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483
+                   0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466
+                   -.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832
+                   .092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688
+                   -.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004
+                   1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651
+                   .64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855
+                   0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017
+                   C22 6.484 17.522 2 12 2z"/>
+        </svg>
+        View on GitHub
+      </a>
+      <p class="text-text-muted text-xs mt-4">
+        MIT License · Python 3.11+ · Works with Claude Code, Cursor, OpenClaw
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────────────── -->
+  <footer class="border-t border-border/50 py-10 px-4 sm:px-6 text-center">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 text-accent" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <ellipse cx="12" cy="5" rx="9" ry="3"/>
+          <path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/>
+          <path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
+        </svg>
+        <span class="text-xs text-text-muted font-bold">
+          kioku<span class="text-accent">-lite</span>
+        </span>
+      </div>
+
+      <p class="text-xs text-text-muted">
+        Built with
+        <span class="text-accent">SQLite + FastEmbed + Python</span>
+        · MIT License
+      </p>
+
+      <div class="flex items-center gap-4 text-xs text-text-muted">
+        <a href="https://github.com/phuc-nt/kioku-agent-kit-lite"
+           target="_blank" rel="noopener noreferrer"
+           class="hover:text-accent transition-colors duration-200 cursor-pointer"
+           aria-label="GitHub repository">GitHub</a>
+        <a href="https://pypi.org/project/kioku-lite/"
+           target="_blank" rel="noopener noreferrer"
+           class="hover:text-accent transition-colors duration-200 cursor-pointer"
+           aria-label="PyPI package">PyPI</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── JS: Copy to clipboard + Reveal on scroll ─────────────────── -->
+  <script>
+    // Copy install command
+    function copyInstall(btn) {
+      const cmd = 'pip install "kioku-lite[cli]"';
+      navigator.clipboard.writeText(cmd).then(() => {
+        const icon = btn.querySelector('svg');
+        // Show checkmark
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>';
+        btn.setAttribute('aria-label', 'Copied!');
+        setTimeout(() => {
+          icon.innerHTML = `
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          `;
+          btn.setAttribute('aria-label', 'Copy install command');
+        }, 2000);
+      });
+    }
+
+    // Reveal on scroll (IntersectionObserver)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
