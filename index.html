@@ -341,7 +341,7 @@
         </div>
         <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
           <p class="text-text-muted mb-2 select-none">$ kioku-lite save \</p>
-          <p class="text-text pl-4">"Met Hùng at the TBV office today" \</p>
+          <p class="text-text pl-4">"Met Alice at the Acme Corp office today" \</p>
           <p class="text-text pl-4">--mood happy --tags work,people</p>
           <p class="text-text-muted mt-3">→ returns:</p>
           <p class="text-accent pl-4">"content_hash": "a3f7b2..."</p>
@@ -359,11 +359,11 @@
         <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
           <p class="text-text-muted mb-2 select-none">$ kioku-lite kg-index a3f7b2 \</p>
           <p class="text-text pl-4">--entities '[</p>
-          <p class="text-text pl-8">{"name":"Hùng","type":"PERSON"},</p>
-          <p class="text-text pl-8">{"name":"TBV","type":"ORGANIZATION"}</p>
+          <p class="text-text pl-8">{"name":"Alice","type":"PERSON"},</p>
+          <p class="text-text pl-8">{"name":"Acme Corp","type":"ORGANIZATION"}</p>
           <p class="text-text pl-4">]' \</p>
           <p class="text-text pl-4">--relationships '[</p>
-          <p class="text-text pl-8">{"source":"Hùng","target":"TBV",</p>
+          <p class="text-text pl-8">{"source":"Alice","target":"Acme Corp",</p>
           <p class="text-text pl-8"> "rel_type":"WORKS_AT","weight":0.9}</p>
           <p class="text-text pl-4">]'</p>
         </div>
@@ -377,12 +377,12 @@
           <h3 class="font-bold text-sm">Search — tri-hybrid</h3>
         </div>
         <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
-          <p class="text-text-muted mb-2 select-none">$ kioku-lite search "Hùng" \</p>
-          <p class="text-text pl-4">--entities "Hùng"</p>
+          <p class="text-text-muted mb-2 select-none">$ kioku-lite search "Alice" \</p>
+          <p class="text-text pl-4">--entities "Alice"</p>
           <p class="text-text-muted mt-3">→ returns:</p>
           <p class="text-accent pl-4">"results": [ ... ]</p>
           <p class="text-text-muted pl-4">"graph_context": {</p>
-          <p class="text-text-muted pl-8">"nodes": [{"name":"TBV",...}],</p>
+          <p class="text-text-muted pl-8">"nodes": [{"name":"Acme Corp",...}],</p>
           <p class="text-text-muted pl-8">"evidence": [...]</p>
           <p class="text-text-muted pl-4">}</p>
         </div>
@@ -397,9 +397,9 @@
         </div>
         <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
           <p class="text-text-muted mb-2 select-none"># Graph traversal</p>
-          <p class="text-text">$ kioku-lite recall "Hùng" --hops 2</p>
+          <p class="text-text">$ kioku-lite recall "Alice" --hops 2</p>
           <p class="text-text-muted mt-3 mb-2 select-none"># Shortest path</p>
-          <p class="text-text">$ kioku-lite connect "Hùng" "TBV"</p>
+          <p class="text-text">$ kioku-lite connect "Alice" "Acme Corp"</p>
           <p class="text-text-muted mt-3 mb-2 select-none"># Timeline</p>
           <p class="text-text">$ kioku-lite timeline --from 2026-01-01</p>
         </div>
