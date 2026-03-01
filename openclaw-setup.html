@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OpenClaw Agent Setup — Kioku Lite</title>
+    <meta name="description"
+        content="Step-by-step guide to set up Kioku Lite with an OpenClaw agent. Hand this guide to your developer agent (Claude Code) and it will configure everything autonomously." />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#0F172A',
+                        surface: '#1E293B',
+                        muted: '#334155',
+                        accent: '#22C55E',
+                        'accent-dim': '#16A34A',
+                        text: '#F8FAFC',
+                        'text-muted': '#94A3B8',
+                        border: '#334155',
+                    },
+                    fontFamily: {
+                        mono: ['"Space Mono"', 'Courier New', 'monospace'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+    <style>
+        body {
+            font-family: 'Space Mono', monospace;
+        }
+
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+        }
+
+        pre {
+            background: #0D1117;
+            border: 1px solid #22C55E33;
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: #22C55E;
+        }
+
+        pre code {
+            color: #F8FAFC;
+        }
+
+        h2 {
+            color: #F8FAFC;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #94A3B8;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            color: #94A3B8;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        ul,
+        ol {
+            color: #94A3B8;
+            font-size: 0.8rem;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        li {
+            margin-bottom: 0.25rem;
+        }
+
+        blockquote {
+            border-left: 2px solid #22C55E;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #94A3B8;
+            font-size: 0.8rem;
+        }
+
+        blockquote strong {
+            color: #F8FAFC;
+        }
+
+        .stop-note {
+            border-left: 2px solid #EF4444;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            background: #EF444411;
+            border-radius: 0 6px 6px 0;
+            padding: 0.75rem 1rem;
+            font-size: 0.8rem;
+            color: #FCA5A5;
+        }
+
+        .stop-note strong {
+            color: #F8FAFC;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.75rem;
+        }
+
+        th {
+            text-align: left;
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #334155;
+            color: #94A3B8;
+        }
+
+        td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #22222266;
+            color: #94A3B8;
+        }
+
+        td code {
+            background: #0D1117;
+            padding: 0.15rem 0.4rem;
+            border-radius: 3px;
+            color: #22C55E;
+            font-size: 0.75rem;
+        }
+
+        strong {
+            color: #F8FAFC;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #334155;
+            margin: 2rem 0;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-bg text-text font-mono grid-bg min-h-screen antialiased">
+
+    <!-- ─── NAVBAR ─────────────────────────────────────────────────────── -->
+    <nav class="fixed top-4 left-4 right-4 z-50 flex items-center justify-between
+              bg-surface/80 backdrop-blur-sm border border-border/50
+              rounded-xl px-5 py-3 max-w-5xl mx-auto">
+        <a href="index.html" class="flex items-center gap-2 cursor-pointer group" aria-label="Back to Kioku Lite home">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 text-text-muted group-hover:text-accent transition-colors"
+                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M19 12H5M12 5l-7 7 7 7" />
+            </svg>
+            <span class="text-xs text-text-muted group-hover:text-accent transition-colors duration-200">
+                kioku<span class="text-accent">-lite</span>
+            </span>
+        </a>
+
+        <span class="text-xs text-text-muted tracking-widest hidden sm:block">// OPENCLAW AGENT SETUP</span>
+
+        <button id="btn-copy-all" onclick="copyAll()" class="flex items-center gap-2 bg-accent hover:bg-accent-dim text-bg
+             text-xs font-bold px-4 py-2 rounded-lg transition-colors duration-200
+             cursor-pointer focus-visible:ring-2 focus-visible:ring-accent" aria-label="Copy full guide text">
+            <svg id="icon-copy-all" viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" />
+                <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+            </svg>
+            Copy full guide
+        </button>
+    </nav>
+
+    <!-- ─── HERO BANNER ───────────────────────────────────────────────── -->
+    <section class="pt-32 pb-8 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto text-center">
+        <div class="inline-flex items-center gap-2 bg-accent/10 border border-accent/30
+                text-accent text-xs px-4 py-1.5 rounded-full mb-6">
+            <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" aria-hidden="true"></span>
+            v0.1.18 · OpenClaw + Telegram
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-bold leading-tight mb-4">
+            OpenClaw Agent Setup
+        </h1>
+        <p class="text-text-muted text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
+            For a developer agent (Claude Code) setting up Kioku Lite inside an existing OpenClaw workspace.
+            Copy this guide and hand it to your agent — it will run all steps autonomously.
+        </p>
+        <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+            <button onclick="copyAll()" class="inline-flex items-center justify-center gap-2 bg-accent hover:bg-accent-dim text-bg
+               font-bold px-6 py-3 rounded-lg text-sm transition-colors cursor-pointer
+               focus-visible:ring-2 focus-visible:ring-accent">
+                <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2" />
+                    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                </svg>
+                Copy full guide
+            </button>
+            <a href="#guide" class="inline-flex items-center justify-center gap-2 border border-border hover:border-accent
+                text-text-muted hover:text-accent font-bold px-6 py-3 rounded-lg text-sm
+                transition-colors cursor-pointer">
+                Read guide →
+            </a>
+        </div>
+        <p id="copy-confirm" class="mt-3 text-xs text-accent opacity-0 transition-opacity duration-300">
+            ✓ Copied to clipboard — paste it to your agent!
+        </p>
+    </section>
+
+    <!-- ─── GUIDE CONTENT ─────────────────────────────────────────────── -->
+    <main id="guide" class="pb-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+        <div class="bg-surface border border-border rounded-2xl p-8 sm:p-10">
+
+            <blockquote>
+                <strong>For the OpenClaw developer agent (Claude Code).</strong><br>
+                OpenClaw supports the same AGENTS.md / SKILL.md open standard — run the same install commands as for any
+                general agent, then adapt the output files into OpenClaw's workspace format.
+            </blockquote>
+
+            <h2>Prerequisites <span class="text-xs text-text-muted font-normal">(already done)</span></h2>
+            <ul>
+                <li>OpenClaw gateway is running (<code>openclaw gateway status</code> → active)</li>
+                <li>An agent workspace exists or will be created (<code>~/.openclaw/workspace-&lt;name&gt;/</code>)</li>
+                <li>A Telegram bot (or other chatbot) is ready to be bound</li>
+            </ul>
+
+            <hr>
+
+            <h2>Step 1 — Install kioku-lite CLI</h2>
+            <pre><code>uv tool install "kioku-lite[cli]"
+# or: pipx install "kioku-lite[cli]"
+
+kioku-lite --help   # verify</code></pre>
+
+            <hr>
+
+            <h2>Step 2 — Register Global Skill <span class="text-xs text-text-muted font-normal">(once per
+                    machine)</span></h2>
+            <pre><code>kioku-lite init --global</code></pre>
+            <p>Installs <code>~/.agents/skills/kioku-lite/SKILL.md</code> — the full CLI reference. OpenClaw agents use
+                this as the source of truth for how to call the CLI.</p>
+
+            <hr>
+
+            <h2>Step 3 — Install Profile for the Workspace</h2>
+
+            <div class="stop-note">
+                <strong>🛑 STOP — Ask the user before proceeding:</strong><br>
+                <em>"Which persona do you want for this agent — <strong>companion</strong> (emotional listener) or
+                    <strong>mentor</strong> (business &amp; career advisor)?"</em><br>
+                Do not choose a default. Wait for the user's answer before running the command below.
+            </div>
+
+            <p>Navigate to the workspace directory, then run the chosen profile:</p>
+            <pre><code>mkdir -p ~/.openclaw/workspace-&lt;name&gt;
+cd ~/.openclaw/workspace-&lt;name&gt;
+
+# Install the profile chosen by the user:
+kioku-lite install-profile companion   # Emotional Companion
+# OR
+kioku-lite install-profile mentor      # Business &amp; Career Mentor</code></pre>
+
+            <p>This generates two files:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File</th>
+                        <th>Location</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>AGENTS.md</code></td>
+                        <td><code>~/.openclaw/workspace-&lt;name&gt;/AGENTS.md</code></td>
+                        <td>Workspace context + persona role</td>
+                    </tr>
+                    <tr>
+                        <td><code>SKILL.md</code></td>
+                        <td><code>~/.agents/skills/kioku-&lt;name&gt;/SKILL.md</code></td>
+                        <td>Identity + KG Schema for the persona</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr>
+
+            <h2>Step 4 — Create OpenClaw Workspace Files</h2>
+            <p>OpenClaw uses a different file convention. Derive the workspace files from the files generated in Step 3:
+            </p>
+
+            <h3>4a. Create <code>SOUL.md</code> — from <code>AGENTS.md</code></h3>
+            <p><code>AGENTS.md</code> already contains everything needed: space context, agent role, memory directives,
+                and language handling. Simply adapt its content into OpenClaw's format:</p>
+            <pre><code># SOUL.md — &lt;Agent Name&gt;
+
+&lt;Paste the content of AGENTS.md here, expanded into prose if desired&gt;</code></pre>
+            <blockquote>No need to pull from the profile SKILL.md — <code>AGENTS.md</code> covers persona, role, and
+                directives completely.</blockquote>
+
+            <h3>4b. Create <code>TOOLS.md</code> — reference SKILL files by path</h3>
+            <p>Do <strong>not</strong> copy-paste CLI content. Reference the SKILL files by path directly:</p>
+            <pre><code># TOOLS.md — Kioku Lite CLI
+
+## Session Start — Run at the beginning of EVERY session
+
+Step 1: Verify active profile
+```bash
+kioku-lite users
+```
+- If `active_profile` is already `&lt;workspace-name&gt;` → proceed
+- If NOT → `kioku-lite users --use &lt;workspace-name&gt;`
+
+> ⚠️ This profile contains real user data. Never switch to personal or test-* during a live session.
+
+Step 2: Load context
+```bash
+kioku-lite search "&lt;UserName&gt; profile background goals recent" --limit 10
+```
+
+---
+
+## CLI Reference
+
+Read the full CLI documentation from:
+- Commands, search enrichment, decision tree: ~/.agents/skills/kioku-lite/SKILL.md
+- Identity, KG schema (entity &amp; relation types): ~/.agents/skills/kioku-&lt;name&gt;/SKILL.md
+
+> The KG schema in kioku-&lt;name&gt;/SKILL.md takes precedence over the global skill.</code></pre>
+            <blockquote>
+                <strong>Why reference by path?</strong> Always up-to-date on upgrade; single source of truth; no drift
+                between TOOLS.md and the actual SKILL files.
+            </blockquote>
+
+            <hr>
+
+            <h2>Step 5 — Create Kioku Profile</h2>
+            <p><strong>Profile name = the workspace name</strong> — the <code>&lt;name&gt;</code> part of
+                <code>~/.openclaw/workspace-&lt;name&gt;/</code> you already chose. (The agent cannot query its own
+                Telegram Bot ID at runtime.)</p>
+            <pre><code># Example: workspace is ~/.openclaw/workspace-my-companion/
+kioku-lite users --create my-companion
+kioku-lite users --use my-companion
+
+# Verify:
+kioku-lite users</code></pre>
+            <p>Also replace <code>&lt;workspace-name&gt;</code> and <code>&lt;UserName&gt;</code> placeholders in
+                <code>TOOLS.md</code>.</p>
+
+            <hr>
+
+            <h2>Step 6 — Register Agent in <code>openclaw.json</code></h2>
+            <p>Add to <code>~/.openclaw/openclaw.json</code>:</p>
+
+            <h3><code>agents.list</code></h3>
+            <pre><code>{
+  "id": "kioku-&lt;name&gt;",
+  "name": "Kioku &lt;Name&gt; Agent",
+  "workspace": "~/.openclaw/workspace-&lt;name&gt;"
+}</code></pre>
+
+            <h3><code>channels.telegram.accounts</code> (if using Telegram)</h3>
+            <pre><code>"kioku-&lt;name&gt;": {
+  "name": "Kioku &lt;Name&gt; Bot",
+  "dmPolicy": "pairing",
+  "botToken": "&lt;YOUR_BOT_TOKEN&gt;",
+  "groupPolicy": "allowlist",
+  "streamMode": "partial"
+}</code></pre>
+
+            <h3><code>bindings</code></h3>
+            <pre><code>{
+  "agentId": "kioku-&lt;name&gt;",
+  "match": {
+    "channel": "telegram",
+    "accountId": "kioku-&lt;name&gt;"
+  }
+}</code></pre>
+
+            <hr>
+
+            <h2>Step 7 — Restart Gateway</h2>
+            <pre><code>openclaw gateway restart
+openclaw gateway status</code></pre>
+
+            <hr>
+
+            <h2>Step 8 — Verify</h2>
+            <p>Open the chatbot and test. The agent should:</p>
+            <ol>
+                <li>Session start: check profile → activate if needed → load context</li>
+                <li>User shares info: <code>save</code> + <code>kg-index</code> immediately</li>
+                <li>User asks: enrich → <code>search</code> / <code>recall</code> / <code>connect</code></li>
+            </ol>
+            <p>Quick test: <em>"I just had an amazing bowl of ramen for lunch."</em> → agent saves and responds warmly
+                (companion) or analytically (mentor).</p>
+
+            <hr>
+
+            <h2>Profile Isolation</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Profile name</th>
+                        <th>When to use</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Production (live bot)</td>
+                        <td>workspace name (e.g. <code>my-companion</code>)</td>
+                        <td>Real user data</td>
+                    </tr>
+                    <tr>
+                        <td>Development / testing</td>
+                        <td><code>test-&lt;uuid&gt;</code> or any name</td>
+                        <td>Testing only</td>
+                    </tr>
+                </tbody>
+            </table>
+            <blockquote>⚠️ Never test against the production profile.</blockquote>
+
+            <hr>
+
+            <h2>Upgrade</h2>
+            <pre><code>uv tool upgrade kioku-lite
+# or: pipx upgrade kioku-lite
+
+kioku-lite init --global             # refresh global SKILL.md
+kioku-lite install-profile &lt;name&gt;   # refresh profile AGENTS.md + SKILL.md
+# Then re-derive SOUL.md + TOOLS.md from updated files (Step 4)
+
+openclaw gateway restart</code></pre>
+
+        </div>
+    </main>
+
+    <!-- ─── FOOTER ────────────────────────────────────────────────────── -->
+    <footer class="border-t border-border/50 py-10 px-4 sm:px-6 text-center">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <a href="index.html" class="flex items-center gap-2 hover:text-accent transition-colors">
+                <svg viewBox="0 0 24 24" class="w-4 h-4 text-accent" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5" />
+                    <path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3" />
+                </svg>
+                <span class="text-xs text-text-muted font-bold">
+                    kioku<span class="text-accent">-lite</span>
+                </span>
+            </a>
+            <p class="text-xs text-text-muted">Built with <span class="text-accent">SQLite + FastEmbed + Python</span> ·
+                MIT License</p>
+            <div class="flex items-center gap-4 text-xs text-text-muted">
+                <a href="https://github.com/phuc-nt/kioku-agent-kit-lite" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-accent transition-colors cursor-pointer">GitHub</a>
+                <a href="https://pypi.org/project/kioku-lite/" target="_blank" rel="noopener noreferrer"
+                    class="hover:text-accent transition-colors cursor-pointer">PyPI</a>
+                <a href="agent-setup.html" class="hover:text-accent transition-colors cursor-pointer">General Setup</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ─── JS ────────────────────────────────────────────────────────── -->
+    <script>
+        const GUIDE_TEXT = `# Setup Guide: Kioku Lite for an OpenClaw Agent
+
+For the OpenClaw developer agent (Claude Code).
+OpenClaw supports the same AGENTS.md / SKILL.md open standard — run the same install commands as for any general agent, then adapt the output files into OpenClaw's workspace format.
+
+---
+
+## Prerequisites (already done)
+
+- OpenClaw gateway is running (openclaw gateway status → active)
+- An agent workspace exists or will be created (~/.openclaw/workspace-<name>/)
+- A Telegram bot (or other chatbot) is ready to be bound
+
+---
+
+## Step 1 — Install kioku-lite CLI
+
+\`\`\`bash
+uv tool install "kioku-lite[cli]"
+# or: pipx install "kioku-lite[cli]"
+
+kioku-lite --help   # verify
+\`\`\`
+
+---
+
+## Step 2 — Register Global Skill (once per machine)
+
+\`\`\`bash
+kioku-lite init --global
+\`\`\`
+
+Installs ~/.agents/skills/kioku-lite/SKILL.md — the full CLI reference.
+
+---
+
+## Step 3 — Install Profile for the Workspace
+
+🛑 STOP — Ask the user before proceeding:
+"Which persona do you want — companion (emotional listener) or mentor (business & career advisor)?"
+Do not choose a default. Wait for the user's answer.
+
+\`\`\`bash
+mkdir -p ~/.openclaw/workspace-<name>
+cd ~/.openclaw/workspace-<name>
+
+kioku-lite install-profile companion   # Emotional Companion
+# OR
+kioku-lite install-profile mentor      # Business & Career Mentor
+\`\`\`
+
+Generates:
+- AGENTS.md → workspace context + persona role
+- ~/.agents/skills/kioku-<name>/SKILL.md → Identity + KG Schema
+
+---
+
+## Step 4 — Create OpenClaw Workspace Files
+
+### 4a. Create SOUL.md — from AGENTS.md
+
+AGENTS.md contains everything needed (space context, role, directives, language).
+Adapt its content into OpenClaw's format:
+
+# SOUL.md — <Agent Name>
+<Paste AGENTS.md content here, expanded into prose if desired>
+
+### 4b. Create TOOLS.md — reference SKILL files by path
+
+Do NOT copy-paste CLI content. Create TOOLS.md with:
+
+# TOOLS.md — Kioku Lite CLI
+
+## Session Start — Run at the beginning of EVERY session
+
+Step 1: Verify active profile
+\`\`\`bash
+kioku-lite users
+\`\`\`
+- If active_profile is already <workspace-name> → proceed
+- If NOT → kioku-lite users --use <workspace-name>
+
+> ⚠️ This profile contains real user data. Never switch to personal or test-* during a live session.
+
+Step 2: Load context
+\`\`\`bash
+kioku-lite search "<UserName> profile background goals recent" --limit 10
+\`\`\`
+
+---
+
+## CLI Reference
+
+Read the full CLI documentation from:
+- Commands, search enrichment, decision tree: ~/.agents/skills/kioku-lite/SKILL.md
+- Identity, KG schema (entity & relation types): ~/.agents/skills/kioku-<name>/SKILL.md
+
+> The KG schema in kioku-<name>/SKILL.md takes precedence over the global skill.
+
+---
+
+## Step 5 — Create Kioku Profile
+
+Profile name = the workspace name (the <name> part of ~/.openclaw/workspace-<name>/).
+The agent cannot query its own Telegram Bot ID at runtime.
+
+\`\`\`bash
+# Example: workspace is ~/.openclaw/workspace-my-companion/
+kioku-lite users --create my-companion
+kioku-lite users --use my-companion
+
+# Verify:
+kioku-lite users
+\`\`\`
+
+Also replace <workspace-name> and <UserName> placeholders in TOOLS.md.
+
+---
+
+## Step 6 — Register Agent in openclaw.json
+
+Add to ~/.openclaw/openclaw.json:
+
+agents.list:
+{
+  "id": "kioku-<name>",
+  "name": "Kioku <Name> Agent",
+  "workspace": "~/.openclaw/workspace-<name>"
+}
+
+channels.telegram.accounts (if using Telegram):
+"kioku-<name>": {
+  "name": "Kioku <Name> Bot",
+  "dmPolicy": "pairing",
+  "botToken": "<YOUR_BOT_TOKEN>",
+  "groupPolicy": "allowlist",
+  "streamMode": "partial"
+}
+
+bindings:
+{
+  "agentId": "kioku-<name>",
+  "match": { "channel": "telegram", "accountId": "kioku-<name>" }
+}
+
+---
+
+## Step 7 — Restart Gateway
+
+\`\`\`bash
+openclaw gateway restart
+openclaw gateway status
+\`\`\`
+
+---
+
+## Step 8 — Verify
+
+Test: "I just had an amazing bowl of ramen for lunch."
+→ Agent should save it and respond warmly (companion) or analytically (mentor).
+
+---
+
+## Profile Isolation
+
+| Environment           | Profile name                      | When to use     |
+|-----------------------|-----------------------------------|-----------------|
+| Production (live bot) | workspace name (e.g. my-companion)| Real user data  |
+| Development / testing | test-<uuid> or any name           | Testing only    |
+
+⚠️ Never test against the production profile.
+
+---
+
+## Upgrade
+
+\`\`\`bash
+uv tool upgrade kioku-lite
+kioku-lite init --global              # refresh global SKILL.md
+kioku-lite install-profile <name>    # refresh profile AGENTS.md + SKILL.md
+# Re-derive SOUL.md + TOOLS.md from updated files (Step 4)
+openclaw gateway restart
+\`\`\`
+`;
+
+        function copyAll() {
+            navigator.clipboard.writeText(GUIDE_TEXT).then(() => {
+                const icon = document.getElementById('icon-copy-all');
+                if (icon) icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>';
+
+                const confirm = document.getElementById('copy-confirm');
+                if (confirm) {
+                    confirm.style.opacity = '1';
+                    setTimeout(() => { confirm.style.opacity = '0'; }, 3000);
+                }
+
+                setTimeout(() => {
+                    if (icon) icon.innerHTML = `
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+          `;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
