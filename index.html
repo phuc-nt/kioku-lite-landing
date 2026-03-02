@@ -184,7 +184,7 @@
     <div class="code-block inline-flex items-center gap-4 px-6 py-4 mx-auto mb-10 text-left reveal">
       <span class="text-text-muted text-sm select-none" aria-hidden="true">$</span>
       <code class="text-accent text-sm sm:text-base tracking-wide select-all" aria-label="Install command">
-        pip install "kioku-lite[cli]"
+        uv tool install "kioku-lite[cli]"
       </code>
       <button onclick="copyInstall(this)" class="ml-2 p-1.5 rounded hover:bg-surface cursor-pointer transition-colors duration-200
                text-text-muted hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
@@ -423,15 +423,16 @@
       <div class="reveal">
         <p class="text-xs text-text-muted mb-2 tracking-widest">01 — INSTALL</p>
         <div class="code-block p-5">
-          <p class="text-text-muted text-xs select-none mb-1">$ <span class="text-text">pip install
-              "kioku-lite[cli]"</span></p>
+          <p class="text-text-muted text-xs select-none mb-1">$ <span class="text-text">uv tool install "kioku-lite[cli]"</span></p>
+          <p class="text-text-muted text-xs mt-1 pl-4"># or: pipx install "kioku-lite[cli]"</p>
         </div>
       </div>
 
       <div class="reveal">
-        <p class="text-xs text-text-muted mb-2 tracking-widest">02 — FIRST-TIME SETUP (downloads model ~1.1GB once)</p>
+        <p class="text-xs text-text-muted mb-2 tracking-widest">02 — PRE-DOWNLOAD EMBEDDING MODEL (~1.1 GB, one-time)</p>
         <div class="code-block p-5">
           <p class="text-text-muted text-xs select-none mb-1">$ <span class="text-text">kioku-lite setup</span></p>
+          <p class="text-text-muted text-xs mt-2 pl-4"># Optional but recommended — model auto-downloads on first search if skipped.</p>
         </div>
       </div>
 
@@ -524,7 +525,7 @@
   <script>
     // Copy install command
     function copyInstall(btn) {
-      const cmd = 'pip install "kioku-lite[cli]"';
+      const cmd = 'uv tool install "kioku-lite[cli]"';
       navigator.clipboard.writeText(cmd).then(() => {
         const icon = btn.querySelector('svg');
         // Show checkmark
