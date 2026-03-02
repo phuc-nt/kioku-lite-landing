@@ -316,97 +316,41 @@
 
   <!-- ─── ARCHITECTURE ─────────────────────────────────────────────── -->
   <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-    <div class="text-center mb-12 reveal">
+    <div class="text-center mb-10 reveal">
       <p class="text-accent text-xs tracking-widest mb-3">// ARCHITECTURE</p>
       <h2 class="text-3xl sm:text-4xl font-bold">Tri-hybrid search. All in SQLite.</h2>
       <p class="text-text-muted mt-4 text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
-        Three search signals fused via Reciprocal Rank Fusion (RRF).
-        Agent-driven: kioku-lite never calls an LLM.
+        Three search signals (BM25, vector, Knowledge Graph) fused via RRF.
+        Agent-driven, zero LLM calls inside kioku-lite.
       </p>
     </div>
 
-    <!-- System diagram (styled cards) -->
-    <div class="space-y-3 mb-10 reveal">
-      <!-- Layer 1: CLI -->
-      <div class="bg-surface border border-border rounded-xl p-5">
-        <p class="text-accent text-xs tracking-widest mb-3">// INTERFACE</p>
-        <p class="font-bold text-sm mb-2">cli.py <span class="text-text-muted font-normal">(Typer CLI)</span></p>
-        <div class="flex flex-wrap gap-2">
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">save</span>
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">search</span>
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">kg-index</span>
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">recall</span>
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">connect</span>
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">timeline</span>
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">entities</span>
-          <span class="bg-bg border border-border rounded px-2 py-0.5 text-xs text-text-muted">init</span>
-        </div>
-      </div>
-      <!-- Arrow -->
-      <div class="text-center text-accent text-lg" aria-hidden="true">↓</div>
-      <!-- Layer 2: Service -->
-      <div class="bg-surface border border-accent/30 rounded-xl p-5">
-        <p class="text-accent text-xs tracking-widest mb-3">// SERVICE</p>
-        <p class="font-bold text-sm mb-2">KiokuLiteService <span class="text-text-muted font-normal">(service.py)</span>
-        </p>
-        <div class="flex flex-wrap gap-2">
-          <code class="text-xs text-accent bg-accent/5 border border-accent/20 rounded px-2 py-0.5">save_memory()</code>
-          <code class="text-xs text-accent bg-accent/5 border border-accent/20 rounded px-2 py-0.5">search()</code>
-          <code class="text-xs text-accent bg-accent/5 border border-accent/20 rounded px-2 py-0.5">kg_index()</code>
-          <code
-            class="text-xs text-accent bg-accent/5 border border-accent/20 rounded px-2 py-0.5">delete_memory()</code>
-        </div>
-      </div>
-      <!-- Arrow -->
-      <div class="text-center text-accent text-lg" aria-hidden="true">↓</div>
-      <!-- Layer 3: Storage -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <div class="bg-surface border border-border rounded-xl p-4">
-          <p class="font-bold text-xs text-accent mb-2">MarkdownStore</p>
-          <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.6;">
-            <code class="text-text">~/memory/*.md</code><br />
-            Human-readable backup
-          </p>
-        </div>
-        <div class="bg-surface border border-border rounded-xl p-4">
-          <p class="font-bold text-xs text-accent mb-2">Embedder</p>
-          <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.6;">
-            <code class="text-text">FastEmbed ONNX</code><br />
-            1024-dim, fully offline
-          </p>
-        </div>
-        <div class="bg-surface border border-accent/30 rounded-xl p-4">
-          <p class="font-bold text-xs text-accent mb-2">KiokuDB <span class="text-text-muted font-normal">(single
-              .db)</span></p>
-          <div class="space-y-1 text-xs text-text-muted" style="line-height:1.6;">
-            <p><span class="text-text font-bold">SQLiteStore</span></p>
-            <p class="pl-3">├ memories <span class="text-accent">(FTS5)</span></p>
-            <p class="pl-3">└ memory_vec <span class="text-accent">(sqlite-vec)</span></p>
-            <p class="mt-1"><span class="text-text font-bold">GraphStore</span></p>
-            <p class="pl-3">├ kg_nodes</p>
-            <p class="pl-3">├ kg_edges</p>
-            <p class="pl-3">└ kg_aliases</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Doc links -->
-    <div class="text-center reveal">
-      <p class="text-xs text-text-muted mb-2">Deep dive into the architecture:</p>
-      <div class="flex flex-wrap justify-center gap-3">
-        <a href="blog.html#system-architecture"
-          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">System Overview</a>
-        <a href="blog.html#write-save-kg-index"
-          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">Write Pipeline</a>
-        <a href="blog.html#search-architecture"
-          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">Search Pipeline</a>
-        <a href="blog.html#kg-open-schema"
-          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">KG Open Schema</a>
-        <a href="blog.html#memory-comparison"
-          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">Memory
-          Comparison</a>
-      </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 reveal">
+      <a href="blog.html#system-architecture" class="bg-surface border border-border hover:border-accent rounded-xl p-4 text-center
+               transition-colors duration-200 cursor-pointer group block">
+        <p class="text-accent text-xs font-bold group-hover:underline">System overview</p>
+        <p class="text-text-muted text-xs mt-1" style="font-size:10px;">3-layer architecture</p>
+      </a>
+      <a href="blog.html#write-save-kg-index" class="bg-surface border border-border hover:border-accent rounded-xl p-4 text-center
+               transition-colors duration-200 cursor-pointer group block">
+        <p class="text-accent text-xs font-bold group-hover:underline">Write pipeline</p>
+        <p class="text-text-muted text-xs mt-1" style="font-size:10px;">save → kg-index</p>
+      </a>
+      <a href="blog.html#search-architecture" class="bg-surface border border-border hover:border-accent rounded-xl p-4 text-center
+               transition-colors duration-200 cursor-pointer group block">
+        <p class="text-accent text-xs font-bold group-hover:underline">Search pipeline</p>
+        <p class="text-text-muted text-xs mt-1" style="font-size:10px;">BM25 + vec + KG → RRF</p>
+      </a>
+      <a href="blog.html#kg-open-schema" class="bg-surface border border-border hover:border-accent rounded-xl p-4 text-center
+               transition-colors duration-200 cursor-pointer group block">
+        <p class="text-accent text-xs font-bold group-hover:underline">KG open schema</p>
+        <p class="text-text-muted text-xs mt-1" style="font-size:10px;">custom entity types</p>
+      </a>
+      <a href="blog.html#memory-comparison" class="bg-surface border border-border hover:border-accent rounded-xl p-4 text-center
+               transition-colors duration-200 cursor-pointer group block sm:col-span-1 col-span-2">
+        <p class="text-accent text-xs font-bold group-hover:underline">Memory comparison</p>
+        <p class="text-text-muted text-xs mt-1" style="font-size:10px;">vs Claude Code & OpenClaw</p>
+      </a>
     </div>
   </section>
 
