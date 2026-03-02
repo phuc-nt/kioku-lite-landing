@@ -36,6 +36,8 @@
   <!-- Syntax highlighting -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <!-- Mermaid diagram renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
   <style>
     body { font-family: 'Space Mono', monospace; }
@@ -91,6 +93,12 @@
     .prose img { max-width: 100%; border-radius: 8px; margin: 1.5rem auto; display: block; }
     /* hljs theme override: keep background transparent inside .prose pre */
     .prose pre .hljs { background: transparent; padding: 0; }
+    /* Mermaid diagram container */
+    .prose .mermaid {
+      background: #FDFCFB; border: 1px solid #E5DED6; border-radius: 12px;
+      padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; text-align: center;
+    }
+    .prose .mermaid svg { max-width: 100%; height: auto; }
   </style>
 </head>
 
@@ -235,16 +243,42 @@ function badge(tag) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
+//  MERMAID INIT (light theme, manual trigger)
+// ═══════════════════════════════════════════════════════════════════════
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  themeVariables: {
+    primaryColor:       '#F0EBE3',
+    primaryBorderColor: '#D97757',
+    primaryTextColor:   '#131314',
+    lineColor:          '#6B6560',
+    secondaryColor:     '#F9F6F2',
+    tertiaryColor:      '#FFFFFF',
+    edgeLabelBackground:'#FDFCFB',
+    fontFamily:         "'Space Mono', monospace",
+    fontSize:           '13px',
+  },
+});
+
+// ═══════════════════════════════════════════════════════════════════════
 //  MARKED CONFIG
 // ═══════════════════════════════════════════════════════════════════════
 marked.use({
   gfm: true,
   breaks: false,
-  // Open all links in new tab — plain object renderer (marked v5+ compatible)
   renderer: {
+    // Open all links in new tab
     link({ href, title, text }) {
       const titleAttr = title ? ` title="${title}"` : '';
       return `<a href="${href || ''}"${titleAttr} target="_blank" rel="noopener noreferrer">${text}</a>`;
+    },
+    // Intercept ```mermaid blocks → render as <div class="mermaid"> (not <pre><code>)
+    code({ text, lang }) {
+      if (lang === 'mermaid') {
+        return `<div class="mermaid">${text}</div>`;
+      }
+      return false; // default rendering for all other languages
     },
   },
 });
@@ -427,8 +461,14 @@ async function renderPost(slug) {
       </div>
     `;
 
-    // Syntax highlight all code blocks (post-render)
+    // Syntax highlight all code blocks (skip mermaid divs — those are not <pre><code>)
     document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
+
+    // Render mermaid diagrams
+    const mermaidNodes = document.querySelectorAll('#post-body .mermaid');
+    if (mermaidNodes.length > 0) {
+      mermaid.run({ nodes: mermaidNodes });
+    }
 
   } catch (err) {
     renderError(`Could not load content: ${err.message}`, slug);
