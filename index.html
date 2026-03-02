@@ -305,6 +305,48 @@
     </div>
   </section>
 
+  <!-- ─── PERSONA ──────────────────────────────────────────────────── -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+    <div class="text-center mb-8 reveal">
+      <p class="text-accent text-xs tracking-widest mb-3">// PERSONA</p>
+      <h2 class="text-2xl sm:text-3xl font-bold">2 built-in. Infinite custom.</h2>
+      <p class="text-text-muted mt-4 text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
+        Kioku Lite ships with 2 default personas. Need something different?
+        Ask your agent to configure a new one for any domain.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 reveal">
+      <div class="bg-surface border border-border rounded-xl p-5">
+        <p class="font-bold text-sm mb-2">Companion</p>
+        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
+          Tracks emotions and life events.<br />
+          Nodes: <code class="text-accent">EMOTION</code>, <code class="text-accent">LIFE_EVENT</code><br />
+          Edges: <code class="text-accent">TRIGGERED_BY</code>
+        </p>
+      </div>
+      <div class="bg-surface border border-border rounded-xl p-5">
+        <p class="font-bold text-sm mb-2">Mentor</p>
+        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
+          Tracks decisions and lessons learned.<br />
+          Nodes: <code class="text-accent">DECISION</code>, <code class="text-accent">LESSON</code><br />
+          Edges: <code class="text-accent">LED_TO</code>
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-surface/50 border border-accent/20 rounded-xl p-5 text-center reveal">
+      <p class="text-sm text-text-muted" style="line-height:1.75;">
+        Want a persona for <strong class="text-text">HR management</strong>,
+        <strong class="text-text">product management</strong>, or any other domain?
+        Just ask your agent to create one — entity types and relationships are plain strings, not fixed enums.
+      </p>
+      <p class="text-xs text-text-muted mt-3">
+        Details: <a href="blog.html#kg-open-schema" class="text-accent hover:underline">KG Open Schema</a>
+      </p>
+    </div>
+  </section>
+
   <!-- ─── ARCHITECTURE ─────────────────────────────────────────────── -->
   <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
     <div class="text-center mb-10 reveal">
