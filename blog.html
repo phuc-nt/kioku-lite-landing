@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Docs — Kioku Lite</title>
+  <meta name="description" content="Kioku Lite documentation, guides and project blog." />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:           '#0F172A',
+            surface:      '#1E293B',
+            muted:        '#334155',
+            accent:       '#22C55E',
+            'accent-dim': '#16A34A',
+            text:         '#F8FAFC',
+            'text-muted': '#94A3B8',
+            border:       '#334155',
+          },
+          fontFamily: { mono: ['"Space Mono"', 'Courier New', 'monospace'] },
+        },
+      },
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Markdown renderer -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Syntax highlighting -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+  <style>
+    body { font-family: 'Space Mono', monospace; }
+    .grid-bg {
+      background-image:
+        linear-gradient(rgba(34,197,94,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,197,94,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .doc-card { transition: border-color 0.2s, box-shadow 0.2s; }
+    .doc-card:hover { border-color: rgba(34,197,94,0.4); box-shadow: 0 0 24px rgba(34,197,94,0.06); }
+
+    /* ── Prose styles (dark mode) ─────────────────────────────────── */
+    .prose { color: #CBD5E1; line-height: 1.8; }
+    .prose h1 { font-size: 1.875rem; font-weight: 700; color: #F8FAFC; margin: 0 0 1.5rem; line-height: 1.25; }
+    .prose h2 { font-size: 1.25rem; font-weight: 700; color: #F8FAFC; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #334155; }
+    .prose h3 { font-size: 1.0625rem; font-weight: 700; color: #E2E8F0; margin: 2rem 0 0.5rem; }
+    .prose h4 { font-size: 0.75rem; font-weight: 700; color: #94A3B8; margin: 1.5rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .prose p  { margin: 1rem 0; }
+    .prose a  { color: #22C55E; text-decoration: underline; text-underline-offset: 3px; }
+    .prose a:hover { color: #4ADE80; }
+    .prose strong { color: #F8FAFC; font-weight: 700; }
+    .prose em { color: #CBD5E1; font-style: italic; }
+    /* inline code */
+    .prose :not(pre) > code {
+      color: #22C55E; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.15);
+      padding: 0.12em 0.45em; border-radius: 4px;
+      font-family: 'Space Mono', monospace; font-size: 0.825em;
+    }
+    /* code block */
+    .prose pre {
+      background: #1E293B; border: 1px solid #334155; border-radius: 12px;
+      padding: 1.25rem 1.5rem; margin: 1.5rem 0; overflow-x: auto;
+    }
+    .prose pre code {
+      background: none; border: none; color: inherit; padding: 0;
+      font-size: 0.8125rem; font-family: 'Space Mono', monospace;
+    }
+    .prose blockquote {
+      border-left: 3px solid #22C55E; padding-left: 1.25rem; margin: 1.5rem 0;
+      color: #94A3B8; font-style: italic;
+    }
+    .prose blockquote p { margin: 0.5rem 0; }
+    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin: 1rem 0; }
+    .prose ol { list-style-type: decimal; padding-left: 1.5rem; margin: 1rem 0; }
+    .prose li { margin: 0.4rem 0; }
+    .prose li > ul, .prose li > ol { margin: 0.25rem 0; }
+    .prose hr { border: none; border-top: 1px solid #334155; margin: 2.5rem 0; }
+    .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
+    .prose th { background: #1E293B; color: #F8FAFC; font-weight: 700; padding: 0.6rem 1rem; border: 1px solid #334155; text-align: left; }
+    .prose td { padding: 0.6rem 1rem; border: 1px solid #334155; }
+    .prose tr:nth-child(even) td { background: rgba(30,41,59,0.6); }
+    .prose img { max-width: 100%; border-radius: 8px; margin: 1.5rem auto; display: block; }
+    /* hljs theme override: keep background transparent inside .prose pre */
+    .prose pre .hljs { background: transparent; padding: 0; }
+  </style>
+</head>
+
+<body class="bg-bg text-text font-mono grid-bg min-h-screen antialiased">
+
+<!-- ─── NAVBAR ─────────────────────────────────────────────────────── -->
+<nav class="fixed top-4 left-4 right-4 z-50 flex items-center justify-between
+            bg-surface/80 backdrop-blur-sm border border-border/50
+            rounded-xl px-5 py-3 max-w-5xl mx-auto">
+  <a href="index.html"
+     class="flex items-center gap-2 cursor-pointer group"
+     aria-label="Back to Kioku Lite home">
+    <svg viewBox="0 0 24 24" class="w-4 h-4 text-text-muted group-hover:text-accent transition-colors"
+         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 12H5M12 5l-7 7 7 7"/>
+    </svg>
+    <span class="text-xs text-text-muted group-hover:text-accent transition-colors duration-200">
+      kioku<span class="text-accent">-lite</span>
+    </span>
+  </a>
+  <span id="nav-label" class="text-xs text-text-muted tracking-widest hidden sm:block">// DOCS</span>
+  <div class="w-24 sm:hidden"></div>
+</nav>
+
+<!-- ─── APP ──────────────────────────────────────────────────────────
+     JS renders either the list view or a post detail view here.     -->
+<main id="app" class="min-h-screen"></main>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────────── -->
+<footer class="border-t border-border/50 py-10 px-4 sm:px-6 text-center">
+  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-2 hover:text-accent transition-colors">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-accent" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3"/>
+        <path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/>
+        <path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
+      </svg>
+      <span class="text-xs text-text-muted font-bold">kioku<span class="text-accent">-lite</span></span>
+    </a>
+    <p class="text-xs text-text-muted">
+      Built with <span class="text-accent">SQLite + FastEmbed + Python</span> · MIT License
+    </p>
+    <div class="flex items-center gap-4 text-xs text-text-muted">
+      <a href="https://github.com/phuc-nt/kioku-agent-kit-lite" target="_blank" rel="noopener noreferrer"
+         class="hover:text-accent transition-colors">GitHub</a>
+      <a href="https://pypi.org/project/kioku-lite/" target="_blank" rel="noopener noreferrer"
+         class="hover:text-accent transition-colors">PyPI</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ─── JS ────────────────────────────────────────────────────────── -->
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+//  POST CONFIG
+//  Điền src khi có link markdown từ GitHub.
+//  src nhận cả hai dạng:
+//    • Raw URL : https://raw.githubusercontent.com/user/repo/branch/file.md
+//    • Blob URL: https://github.com/user/repo/blob/branch/file.md  (auto-convert)
+// ═══════════════════════════════════════════════════════════════════════
+const POSTS = [
+  {
+    slug: 'getting-started',
+    title: 'Getting Started',
+    date: '',            // ISO date, e.g. '2026-03-02'
+    desc: 'Hướng dẫn cài đặt và bắt đầu sử dụng Kioku Lite từ zero.',
+    tags: ['guide', 'install'],
+    src: '',             // TODO: paste GitHub markdown link here
+  },
+  {
+    slug: 'architecture',
+    title: 'Architecture Overview',
+    date: '',
+    desc: 'Kiến trúc tri-hybrid search: BM25 (SQLite FTS5) + Vector (FastEmbed) + Knowledge Graph (FalkorDB).',
+    tags: ['architecture', 'technical'],
+    src: '',             // TODO: paste GitHub markdown link here
+  },
+  {
+    slug: 'cli-reference',
+    title: 'CLI Reference',
+    date: '',
+    desc: 'Toàn bộ lệnh CLI: kioku add, search, relate, graph, export, serve…',
+    tags: ['reference', 'cli'],
+    src: '',             // TODO: paste GitHub markdown link here
+  },
+  {
+    slug: 'mcp-server',
+    title: 'MCP Server Integration',
+    date: '',
+    desc: 'Cách kết nối Kioku Lite với Claude Code, Claude Desktop và các MCP-compatible agents.',
+    tags: ['guide', 'mcp', 'integration'],
+    src: '',             // TODO: paste GitHub markdown link here
+  },
+  {
+    slug: 'changelog',
+    title: 'Changelog',
+    date: '',
+    desc: 'Lịch sử thay đổi, releases và breaking changes.',
+    tags: ['changelog'],
+    src: '',             // TODO: paste GitHub markdown link here
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════════
+//  UTILITIES
+// ═══════════════════════════════════════════════════════════════════════
+
+/** Convert GitHub blob URL → raw.githubusercontent.com URL for fetch. */
+function toRawUrl(url) {
+  if (!url) return '';
+  return url
+    .replace('https://github.com/', 'https://raw.githubusercontent.com/')
+    .replace('/blob/', '/');
+}
+
+/** Strip YAML front matter (---…---) from markdown string. */
+function stripFrontMatter(md) {
+  if (!md.startsWith('---')) return md;
+  const end = md.indexOf('\n---', 3);
+  return end !== -1 ? md.slice(end + 4).trimStart() : md;
+}
+
+/** Read URL hash → slug (empty string = list view). */
+function getSlug() { return location.hash.slice(1); }
+
+/** Format ISO date → Vietnamese locale. */
+function fmtDate(iso) {
+  if (!iso) return '';
+  try {
+    return new Date(iso).toLocaleDateString('vi-VN', {
+      year: 'numeric', month: 'long', day: 'numeric',
+    });
+  } catch { return iso; }
+}
+
+/** Render a tag badge span. */
+function badge(tag) {
+  return `<span class="inline-block text-xs px-2 py-0.5 rounded-full border border-accent/25 text-accent/70 bg-accent/5 tracking-wide">${tag}</span>`;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  MARKED CONFIG
+// ═══════════════════════════════════════════════════════════════════════
+marked.use({
+  gfm: true,
+  breaks: false,
+  // Open all links in new tab
+  renderer: (() => {
+    const r = new marked.Renderer();
+    const origLink = r.link.bind(r);
+    r.link = function(token) {
+      const html = origLink(token);
+      return html.replace('<a ', '<a target="_blank" rel="noopener noreferrer" ');
+    };
+    return r;
+  })(),
+});
+
+// ═══════════════════════════════════════════════════════════════════════
+//  LIST VIEW
+// ═══════════════════════════════════════════════════════════════════════
+function renderList() {
+  document.title = 'Docs — Kioku Lite';
+  document.getElementById('nav-label').textContent = '// DOCS';
+
+  const cards = POSTS.map(p => {
+    const ready   = !!p.src;
+    const tagHtml = p.tags.map(badge).join(' ');
+    const dateHtml = p.date ? `<span class="text-xs text-text-muted">${fmtDate(p.date)}</span>` : '';
+    const statusBadge = ready
+      ? ''
+      : `<span class="shrink-0 text-xs px-2 py-0.5 rounded-full bg-muted/40 text-text-muted border border-border">coming soon</span>`;
+
+    // If ready → clickable <a>; otherwise → inert <div>
+    const Tag  = ready ? 'a' : 'div';
+    const href = ready ? `href="blog.html#${p.slug}"` : '';
+    const dim  = ready ? '' : 'opacity-55 cursor-default';
+
+    return `
+      <${Tag} ${href} class="doc-card bg-surface border border-border rounded-2xl p-6 flex flex-col gap-3 ${dim}" style="text-decoration:none">
+        <div class="flex items-start justify-between gap-3">
+          <h2 class="text-sm font-bold text-text leading-snug">${p.title}</h2>
+          ${statusBadge}
+        </div>
+        <p class="text-xs text-text-muted leading-relaxed flex-1">${p.desc}</p>
+        <div class="flex items-center justify-between flex-wrap gap-2 mt-auto pt-3 border-t border-border/50">
+          <div class="flex flex-wrap gap-1.5">${tagHtml}</div>
+          ${dateHtml}
+        </div>
+      </${Tag}>
+    `;
+  }).join('');
+
+  const readyCount = POSTS.filter(p => p.src).length;
+
+  document.getElementById('app').innerHTML = `
+    <!-- Hero -->
+    <section class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 bg-accent/10 border border-accent/30
+                  text-accent text-xs px-4 py-1.5 rounded-full mb-6">
+        <svg viewBox="0 0 24 24" class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10 9 9 9 8 9"/>
+        </svg>
+        Documentation
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-bold leading-tight mb-4">
+        Kioku Lite <span class="text-accent">Docs</span>
+      </h1>
+      <p class="text-text-muted text-sm max-w-lg mx-auto" style="line-height:1.75;">
+        Tài liệu kỹ thuật, hướng dẫn tích hợp và kiến trúc hệ thống.<br>
+        ${readyCount > 0 ? `${readyCount}/${POSTS.length} bài đã có nội dung.` : 'Nội dung đang được cập nhật.'}
+      </p>
+    </section>
+
+    <!-- Grid -->
+    <section class="pb-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+      <div class="flex items-center gap-4 mb-8">
+        <p class="text-xs text-accent tracking-widest whitespace-nowrap">// ${POSTS.length} docs</p>
+        <div class="flex-1 border-t border-border"></div>
+        <p class="text-xs text-text-muted whitespace-nowrap">
+          ${readyCount > 0 ? `${readyCount} available` : 'coming soon'}
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        ${cards}
+      </div>
+    </section>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  POST DETAIL VIEW
+// ═══════════════════════════════════════════════════════════════════════
+async function renderPost(slug) {
+  const post = POSTS.find(p => p.slug === slug);
+
+  if (!post) {
+    return renderError('Không tìm thấy bài viết.', slug);
+  }
+  if (!post.src) {
+    return renderError(`"${post.title}" chưa có nội dung — quay lại sau nhé!`, slug);
+  }
+
+  document.title = `${post.title} — Kioku Lite Docs`;
+  document.getElementById('nav-label').textContent = `// ${post.title.toUpperCase()}`;
+
+  // Loading indicator
+  document.getElementById('app').innerHTML = `
+    <div class="pt-40 pb-24 flex flex-col items-center justify-center gap-4 text-text-muted">
+      <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           style="animation:spin 1s linear infinite">
+        <circle cx="12" cy="12" r="10" opacity="0.2"/>
+        <path d="M12 2a10 10 0 0110 10" stroke-linecap="round"/>
+      </svg>
+      <span class="text-xs tracking-widest">Đang tải…</span>
+    </div>
+    <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+  `;
+
+  try {
+    const rawUrl = toRawUrl(post.src);
+    const res    = await fetch(rawUrl);
+    if (!res.ok) throw new Error(`HTTP ${res.status} — ${res.statusText}`);
+
+    const rawMd  = await res.text();
+    const md     = stripFrontMatter(rawMd);
+    const html   = marked.parse(md);
+
+    const tagHtml  = post.tags.map(badge).join(' ');
+    const dateHtml = post.date
+      ? `<span class="text-xs text-text-muted">${fmtDate(post.date)}</span>`
+      : '';
+
+    document.getElementById('app').innerHTML = `
+      <div class="pt-28 pb-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+
+        <!-- Back (top) -->
+        <a href="blog.html"
+           class="inline-flex items-center gap-2 text-xs text-text-muted hover:text-accent
+                  transition-colors mb-10 group">
+          <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Tất cả docs
+        </a>
+
+        <!-- Post header -->
+        <header class="mb-10 pb-8 border-b border-border">
+          <div class="flex flex-wrap gap-1.5 mb-4">${tagHtml}</div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-text leading-tight mb-3">${post.title}</h1>
+          <p class="text-text-muted text-sm leading-relaxed mb-5">${post.desc}</p>
+          <div class="flex items-center gap-5 flex-wrap">
+            ${dateHtml}
+            <a href="${rawUrl}" target="_blank" rel="noopener noreferrer"
+               class="inline-flex items-center gap-1.5 text-xs text-text-muted
+                      hover:text-accent transition-colors">
+              <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61
+                         c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77
+                         5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0
+                         C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77
+                         a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7
+                         A3.37 3.37 0 009 18.13V22"/>
+              </svg>
+              Xem nguồn trên GitHub
+            </a>
+          </div>
+        </header>
+
+        <!-- Rendered markdown -->
+        <article class="prose" id="post-body">
+          ${html}
+        </article>
+
+        <!-- Back (bottom) -->
+        <div class="mt-16 pt-8 border-t border-border">
+          <a href="blog.html"
+             class="inline-flex items-center gap-2 text-xs text-text-muted
+                    hover:text-accent transition-colors group">
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 12H5M12 5l-7 7 7 7"/>
+            </svg>
+            Quay lại tất cả docs
+          </a>
+        </div>
+
+      </div>
+    `;
+
+    // Syntax highlight all code blocks (post-render)
+    document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
+
+  } catch (err) {
+    renderError(`Không thể tải nội dung: ${err.message}`, slug);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  ERROR VIEW
+// ═══════════════════════════════════════════════════════════════════════
+function renderError(msg) {
+  document.getElementById('app').innerHTML = `
+    <div class="pt-40 pb-24 px-4 max-w-2xl mx-auto flex flex-col items-center gap-6 text-center">
+      <svg viewBox="0 0 24 24" class="w-10 h-10 text-text-muted" fill="none" stroke="currentColor"
+           stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </svg>
+      <p class="text-text-muted text-sm leading-relaxed">${msg}</p>
+      <a href="blog.html"
+         class="inline-flex items-center gap-2 border border-accent/40 hover:border-accent
+                text-accent text-xs px-4 py-2 rounded-lg transition-colors">
+        <svg viewBox="0 0 24 24" class="w-3.5 h-3.5" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Quay lại danh sách
+      </a>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  ROUTER  (hash-based: blog.html = list, blog.html#slug = detail)
+// ═══════════════════════════════════════════════════════════════════════
+function route() {
+  const slug = getSlug();
+  window.scrollTo(0, 0);
+  if (slug) renderPost(slug);
+  else      renderList();
+}
+
+window.addEventListener('hashchange', route);
+route();
+</script>
+
+</body>
+</html>
