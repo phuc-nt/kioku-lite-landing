@@ -151,9 +151,8 @@
 
     <!-- Nav links -->
     <div class="hidden sm:flex items-center gap-6 text-xs text-text-muted">
-      <a href="#features" class="hover:text-accent transition-colors duration-200 cursor-pointer">features</a>
-      <a href="#how-it-works" class="hover:text-accent transition-colors duration-200 cursor-pointer">how it works</a>
-      <a href="#quickstart" class="hover:text-accent transition-colors duration-200 cursor-pointer">quickstart</a>
+      <a href="#quickstart" class="hover:text-accent transition-colors duration-200 cursor-pointer">setup</a>
+      <a href="#features" class="hover:text-accent transition-colors duration-200 cursor-pointer">architecture</a>
       <a href="agent-setup.html"
         class="hover:text-accent transition-colors duration-200 cursor-pointer text-accent/80 font-bold">agent setup
         ↗</a>
@@ -187,9 +186,7 @@
   </nav>
 
   <!-- ─── HERO ──────────────────────────────────────────────────────── -->
-  <section class="pt-32 pb-24 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
-
-    <!-- Headline -->
+  <section class="pt-32 pb-16 px-4 sm:px-6 lg:px-8 text-center max-w-4xl mx-auto">
     <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight mb-12 reveal"
       style="overflow:visible;">
       Your AI agent's memory,<br />
@@ -204,210 +201,29 @@
         <span style="color:#D97757">ku</span><span class="cursor"></span>
       </span>
     </h1>
-
-    <!-- Sub-headline -->
-    <p class="text-text-muted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto mb-10 reveal"
-      style="line-height: 1.75;">
+    <p class="text-text-muted text-base sm:text-lg leading-relaxed max-w-2xl mx-auto reveal" style="line-height: 1.75;">
       Tri-hybrid search (BM25 + Vector + Knowledge Graph) in a single file.
       No big DB, no server, no Cloud LLM.
       Just <code class="bg-surface px-2 py-0.5 rounded text-accent text-sm">pip install</code>.
     </p>
-
-    <!-- Install command -->
-    <div class="code-block inline-flex items-center gap-4 px-6 py-4 mx-auto mb-10 text-left reveal">
-      <span class="text-text-muted text-sm select-none" aria-hidden="true">$</span>
-      <code class="text-accent text-sm sm:text-base tracking-wide select-all" aria-label="Install command">
-        pipx install "kioku-lite[cli]"
-      </code>
-      <button onclick="copyInstall(this)" class="ml-2 p-1.5 rounded hover:bg-surface cursor-pointer transition-colors duration-200
-               text-text-muted hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
-        aria-label="Copy install command">
-        <!-- Copy icon -->
-        <svg id="icon-copy" viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="9" y="9" width="13" height="13" rx="2" />
-          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-        </svg>
-      </button>
-    </div>
-
-    <!-- CTA buttons -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center reveal">
-      <a href="#quickstart" class="bg-accent hover:bg-accent-dim text-bg font-bold px-8 py-3 rounded-lg
-                text-sm transition-colors duration-200 cursor-pointer
-                focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2
-                focus-visible:ring-offset-bg">
-        Get Started →
-      </a>
-      <a href="#how-it-works" class="border border-border hover:border-accent text-text-muted hover:text-accent
-                font-bold px-8 py-3 rounded-lg text-sm transition-colors duration-200
-                cursor-pointer focus-visible:ring-2 focus-visible:ring-accent">
-        How it works
-      </a>
-    </div>
-
-    <!-- Setup guide buttons -->
-    <div class="flex flex-col sm:flex-row gap-3 justify-center mt-4 reveal">
-      <p class="w-full sm:w-auto self-center text-xs text-text-muted tracking-widest">// SETUP GUIDES</p>
-      <a href="agent-setup.html" class="bg-accent/10 hover:bg-accent/20 border border-accent/40 hover:border-accent text-accent
-                font-bold px-6 py-2.5 rounded-lg text-xs transition-colors duration-200
-                cursor-pointer focus-visible:ring-2 focus-visible:ring-accent">
-        Claude Code / Cursor / Windsurf ↗
-      </a>
-      <a href="openclaw-setup.html" class="bg-accent/10 hover:bg-accent/20 border border-accent/40 hover:border-accent text-accent
-                font-bold px-6 py-2.5 rounded-lg text-xs transition-colors duration-200
-                cursor-pointer focus-visible:ring-2 focus-visible:ring-accent">
-        OpenClaw + Telegram ↗
-      </a>
-      <a href="blog.html" class="bg-accent/5 hover:bg-accent/10 border border-accent/25 hover:border-accent/50 text-accent/70
-                hover:text-accent font-bold px-6 py-2.5 rounded-lg text-xs transition-colors duration-200
-                cursor-pointer focus-visible:ring-2 focus-visible:ring-accent">
-        Docs ↗
-      </a>
-    </div>
-
-    <!-- Stats bar -->
-    <div class="flex flex-wrap justify-center gap-8 mt-16 pt-8 border-t border-border/50 reveal">
-      <div class="text-center">
-        <p class="text-2xl font-bold text-accent">1.2s</p>
-        <p class="text-xs text-text-muted mt-1">avg. search latency</p>
-      </div>
-      <div class="text-center">
-        <p class="text-2xl font-bold text-accent">1 file</p>
-        <p class="text-xs text-text-muted mt-1">SQLite database</p>
-      </div>
-      <div class="text-center">
-        <p class="text-2xl font-bold text-accent">0</p>
-        <p class="text-xs text-text-muted mt-1">Docker containers</p>
-      </div>
-      <div class="text-center">
-        <p class="text-2xl font-bold text-accent">149+</p>
-        <p class="text-xs text-text-muted mt-1">tests passing</p>
-      </div>
-    </div>
   </section>
 
-  <!-- ─── ARCHITECTURE ──────────────────────────────────────────────── -->
-  <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-    <div class="text-center mb-12 reveal">
-      <p class="text-accent text-xs tracking-widest mb-3">// ARCHITECTURE</p>
-      <h2 class="text-3xl sm:text-4xl font-bold">Tri-hybrid search. All in SQLite.</h2>
-      <p class="text-text-muted mt-4 text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
-        Three search signals fused into one query. No external services, no Docker, no cloud LLM.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-      <div class="bg-surface border border-border hover:border-accent/50 rounded-xl p-6
-                  transition-colors duration-200 cursor-default reveal">
-        <h3 class="font-bold text-sm mb-2 text-accent">BM25</h3>
-        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
-          SQLite FTS5. Exact keyword match. Multilingual.
-        </p>
-      </div>
-      <div class="bg-surface border border-border hover:border-accent/50 rounded-xl p-6
-                  transition-colors duration-200 cursor-default reveal">
-        <h3 class="font-bold text-sm mb-2 text-accent">Vector</h3>
-        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
-          sqlite-vec + FastEmbed ONNX. 1024-dim embeddings. Fully offline.
-        </p>
-      </div>
-      <div class="bg-surface border border-border hover:border-accent/50 rounded-xl p-6
-                  transition-colors duration-200 cursor-default reveal">
-        <h3 class="font-bold text-sm mb-2 text-accent">Knowledge Graph</h3>
-        <p class="text-text-muted text-xs leading-relaxed" style="line-height:1.75;">
-          SQLite-backed graph. BFS traversal. Entity aliases. Open schema.
-        </p>
-      </div>
-    </div>
-
-    <div class="bg-surface/50 border border-accent/20 rounded-xl p-6 text-center reveal">
-      <p class="text-sm font-bold">
-        Results fused via
-        <span class="text-accent">Reciprocal Rank Fusion (RRF)</span>
-        then deduplicated.
-      </p>
-    </div>
-
-    <div class="mt-6 text-center reveal">
-      <p class="text-xs text-text-muted">
-        Deep dive:
-        <a href="blog.html#system-architecture" class="text-accent hover:underline">System Architecture</a> ·
-        <a href="blog.html#write-save-kg-index" class="text-accent hover:underline">Write Pipeline</a> ·
-        <a href="blog.html#search-architecture" class="text-accent hover:underline">Search Pipeline</a>
+  <!-- ─── WHY ──────────────────────────────────────────────────────── -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
+    <div class="text-center reveal">
+      <p class="text-accent text-xs tracking-widest mb-3">// WHY</p>
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4">Most agents forget. Kioku doesn't.</h2>
+      <p class="text-text-muted text-sm leading-relaxed max-w-2xl mx-auto" style="line-height:1.75;">
+        Existing long-term memory tools store flat text or vectors with no structure.
+        They can't answer <em>"Why was I stressed last month?"</em> because they don't track
+        how events, emotions, and decisions are connected.
+        Kioku Lite adds a <strong class="text-text">Knowledge Graph</strong> on top of keyword and semantic search,
+        so your agent can trace cause and effect across months of conversation.
       </p>
     </div>
   </section>
 
-  <!-- ─── HOW IT WORKS ──────────────────────────────────────────────── -->
-  <section id="how-it-works" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-    <div class="text-center mb-12 reveal">
-      <p class="text-accent text-xs tracking-widest mb-3">// WORKFLOW</p>
-      <h2 class="text-3xl sm:text-4xl font-bold">Agent-driven. No built-in LLM.</h2>
-      <p class="text-text-muted mt-4 text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
-        The agent saves text, extracts entities from its own conversation, then indexes them into the graph.
-        Kioku Lite never calls an LLM.
-      </p>
-    </div>
-
-    <!-- Write + Search phases side by side -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-      <!-- Write phase -->
-      <div class="reveal">
-        <p class="text-xs text-text-muted mb-3 tracking-widest">// WRITE PHASE</p>
-        <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
-          <p class="text-text-muted mb-1 select-none">$ kioku-lite save "Met Alice today" --mood happy</p>
-          <p class="text-accent pl-4">→ content_hash: a3f7b2...</p>
-          <p class="text-text-muted mt-3 mb-1 select-none">$ kioku-lite kg-index a3f7b2 \</p>
-          <p class="text-text pl-4">--entities '[{"name":"Alice","type":"PERSON"}]' \</p>
-          <p class="text-text pl-4">--relationships '[{"source":"Alice","rel_type":"WORKS_AT","target":"Acme"}]'</p>
-        </div>
-      </div>
-
-      <!-- Search phase -->
-      <div class="reveal">
-        <p class="text-xs text-text-muted mb-3 tracking-widest">// SEARCH PHASE</p>
-        <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
-          <p class="text-text-muted mb-1 select-none">$ kioku-lite search "Alice" --entities "Alice"</p>
-          <p class="text-accent pl-4">→ BM25 + Vector + KG → RRF merged results</p>
-          <p class="text-text-muted mt-3 mb-1 select-none">$ kioku-lite recall "Alice" --hops 2</p>
-          <p class="text-text-muted mb-1 select-none">$ kioku-lite connect "Alice" "Acme"</p>
-          <p class="text-text-muted select-none">$ kioku-lite timeline --from 2026-01-01</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── OPEN SCHEMA KG ───────────────────────────────────────────── -->
-  <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-    <div class="bg-surface border border-border rounded-xl p-8 reveal">
-      <p class="text-accent text-xs tracking-widest mb-3">// KNOWLEDGE GRAPH</p>
-      <h2 class="text-2xl font-bold mb-4">Open schema. Custom personas.</h2>
-      <p class="text-text-muted text-sm leading-relaxed mb-6" style="line-height:1.75;">
-        Entity types and relationship types are plain strings, not fixed enums.
-        Users can create custom personas by changing how their agent extracts entities.
-      </p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-        <div class="bg-bg border border-border rounded-lg p-4">
-          <p class="font-bold mb-2">Companion persona</p>
-          <p class="text-text-muted">Nodes: <code class="text-accent">EMOTION</code>, <code
-              class="text-accent">LIFE_EVENT</code></p>
-          <p class="text-text-muted">Edges: <code class="text-accent">TRIGGERED_BY</code></p>
-        </div>
-        <div class="bg-bg border border-border rounded-lg p-4">
-          <p class="font-bold mb-2">Mentor persona</p>
-          <p class="text-text-muted">Nodes: <code class="text-accent">DECISION</code>, <code
-              class="text-accent">LESSON</code></p>
-          <p class="text-text-muted">Edges: <code class="text-accent">LED_TO</code></p>
-        </div>
-      </div>
-      <p class="text-xs text-text-muted mt-4">
-        Details: <a href="blog.html#kg-open-schema" class="text-accent hover:underline">KG Open Schema</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ─── MEMORY COMPARISON ────────────────────────────────────────── -->
+  <!-- ─── COMPARISON ───────────────────────────────────────────────── -->
   <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
     <div class="text-center mb-8 reveal">
       <p class="text-accent text-xs tracking-widest mb-3">// COMPARISON</p>
@@ -450,7 +266,7 @@
     </p>
   </section>
 
-  <!-- ─── SETUP GUIDES ─────────────────────────────────────────────── -->
+  <!-- ─── SETUP ────────────────────────────────────────────────────── -->
   <section id="quickstart" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
     <div class="text-center mb-12 reveal">
       <p class="text-accent text-xs tracking-widest mb-3">// SETUP</p>
@@ -484,7 +300,6 @@
       </a>
     </div>
 
-    <!-- Quick install -->
     <div class="bg-surface/50 border border-border/50 rounded-xl p-6 reveal">
       <p class="text-xs text-text-muted mb-3 tracking-widest">// QUICK INSTALL (3 commands)</p>
       <div class="code-block p-4 text-xs leading-relaxed overflow-x-auto">
@@ -499,7 +314,73 @@
     </div>
   </section>
 
-  <!-- ─── LITE vs FULL ─────────────────────────────────────────────── -->
+  <!-- ─── ARCHITECTURE ─────────────────────────────────────────────── -->
+  <section id="features" class="py-24 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <p class="text-accent text-xs tracking-widest mb-3">// ARCHITECTURE</p>
+      <h2 class="text-3xl sm:text-4xl font-bold">Tri-hybrid search. All in SQLite.</h2>
+      <p class="text-text-muted mt-4 text-sm leading-relaxed max-w-xl mx-auto" style="line-height:1.75;">
+        Three search signals fused via Reciprocal Rank Fusion (RRF).
+        Agent-driven: kioku-lite never calls an LLM.
+      </p>
+    </div>
+
+    <!-- System diagram -->
+    <div class="reveal">
+      <div class="code-block p-5 text-xs leading-relaxed overflow-x-auto mb-8">
+        <pre class="text-text-muted" style="font-size:11px;line-height:1.6;">
+<span class="text-text">┌──────────────────────────────────────────────────────────────┐</span>
+<span class="text-text">│</span>                     <span class="text-accent">INTERFACE LAYER</span>                          <span class="text-text">│</span>
+<span class="text-text">│</span>                                                              <span class="text-text">│</span>
+<span class="text-text">│</span>   cli.py  (Typer CLI)                                        <span class="text-text">│</span>
+<span class="text-text">│</span>   save · kg-index · kg-alias · search · recall               <span class="text-text">│</span>
+<span class="text-text">│</span>   connect · entities · timeline · users · setup · init        <span class="text-text">│</span>
+<span class="text-text">│</span>                              │                               <span class="text-text">│</span>
+<span class="text-text">└──────────────────────────────┼───────────────────────────────┘</span>
+                               ▼
+<span class="text-text">┌──────────────────────────────────────────────────────────────┐</span>
+<span class="text-text">│</span>               <span class="text-accent">KiokuLiteService</span>  (service.py)                 <span class="text-text">│</span>
+<span class="text-text">│</span>   save_memory() │ search() │ kg_index() │ delete_memory()   <span class="text-text">│</span>
+<span class="text-text">└────────┬─────────────────┬─────────────────────┬─────────────┘</span>
+         │                 │                     │
+         ▼                 ▼                     ▼
+  <span class="text-accent">MarkdownStore</span>        <span class="text-accent">Embedder</span>              <span class="text-accent">KiokuDB</span>
+  ~/memory/*.md       FastEmbed             (single .db)
+  (human backup)      ONNX local    ┌────────────────────────┐
+                                    │  SQLiteStore           │
+                                    │  ├── memories (FTS5)   │
+                                    │  └── memory_vec        │
+                                    │      (sqlite-vec)      │
+                                    │                        │
+                                    │  GraphStore            │
+                                    │  ├── kg_nodes          │
+                                    │  ├── kg_edges          │
+                                    │  └── kg_aliases        │
+                                    └────────────────────────┘
+</pre>
+      </div>
+    </div>
+
+    <!-- Doc links -->
+    <div class="text-center reveal">
+      <p class="text-xs text-text-muted mb-2">Deep dive into the architecture:</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="blog.html#system-architecture"
+          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">System Overview</a>
+        <a href="blog.html#write-save-kg-index"
+          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">Write Pipeline</a>
+        <a href="blog.html#search-architecture"
+          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">Search Pipeline</a>
+        <a href="blog.html#kg-open-schema"
+          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">KG Open Schema</a>
+        <a href="blog.html#memory-comparison"
+          class="text-xs text-accent hover:underline border border-accent/30 px-3 py-1.5 rounded-lg">Memory
+          Comparison</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ROADMAP ──────────────────────────────────────────────────── -->
   <section class="py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
     <div class="bg-surface border border-border rounded-xl p-8 text-center reveal">
       <p class="text-accent text-xs tracking-widest mb-3">// ROADMAP</p>
