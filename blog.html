@@ -240,16 +240,13 @@ function badge(tag) {
 marked.use({
   gfm: true,
   breaks: false,
-  // Open all links in new tab
-  renderer: (() => {
-    const r = new marked.Renderer();
-    const origLink = r.link.bind(r);
-    r.link = function(token) {
-      const html = origLink(token);
-      return html.replace('<a ', '<a target="_blank" rel="noopener noreferrer" ');
-    };
-    return r;
-  })(),
+  // Open all links in new tab — plain object renderer (marked v5+ compatible)
+  renderer: {
+    link({ href, title, text }) {
+      const titleAttr = title ? ` title="${title}"` : '';
+      return `<a href="${href || ''}"${titleAttr} target="_blank" rel="noopener noreferrer">${text}</a>`;
+    },
+  },
 });
 
 // ═══════════════════════════════════════════════════════════════════════
