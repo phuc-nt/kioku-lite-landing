@@ -13,14 +13,14 @@
       theme: {
         extend: {
           colors: {
-            bg:        '#0F172A',
-            surface:   '#1E293B',
-            muted:     '#334155',
-            accent:    '#22C55E',
-            'accent-dim': '#16A34A',
-            text:      '#F8FAFC',
-            'text-muted': '#94A3B8',
-            border:    '#334155',
+            bg:        '#F9F6F2',
+            surface:   '#FFFFFF',
+            muted:     '#E5DED6',
+            accent:    '#D97757',
+            'accent-dim': '#C06543',
+            text:      '#131314',
+            'text-muted': '#6B6560',
+            border:    '#E5DED6',
           },
           fontFamily: {
             mono: ['"Space Mono"', 'Courier New', 'monospace'],
@@ -39,30 +39,30 @@
 
     .grid-bg {
       background-image:
-        linear-gradient(rgba(34, 197, 94, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34, 197, 94, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(217, 119, 87, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217, 119, 87, 0.03) 1px, transparent 1px);
       background-size: 48px 48px;
     }
 
     /* Rendered markdown styles */
-    #guide-content pre { background: #0D1117; border: 1px solid #22C55E33; border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
-    #guide-content code { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: #22C55E; }
-    #guide-content pre code { color: #F8FAFC; }
+    #guide-content pre { background: #F5F2EF; border: 1px solid #D9775733; border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
+    #guide-content code { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: #D97757; }
+    #guide-content pre code { color: #131314; }
     #guide-content h1 { display: none; } /* title shown in hero */
-    #guide-content h2 { color: #F8FAFC; font-size: 1.1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
-    #guide-content h3 { color: #94A3B8; font-size: 0.85rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.5rem; }
-    #guide-content p { color: #94A3B8; font-size: 0.8rem; line-height: 1.8; margin-bottom: 0.75rem; }
-    #guide-content ul, #guide-content ol { color: #94A3B8; font-size: 0.8rem; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    #guide-content h2 { color: #131314; font-size: 1.1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; border-bottom: 1px solid #E5DED6; padding-bottom: 0.5rem; }
+    #guide-content h3 { color: #6B6560; font-size: 0.85rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+    #guide-content p { color: #6B6560; font-size: 0.8rem; line-height: 1.8; margin-bottom: 0.75rem; }
+    #guide-content ul, #guide-content ol { color: #6B6560; font-size: 0.8rem; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 0.75rem; }
     #guide-content li { margin-bottom: 0.25rem; }
-    #guide-content blockquote { border-left: 2px solid #22C55E; padding-left: 1rem; margin: 1rem 0; color: #94A3B8; font-size: 0.8rem; }
-    #guide-content blockquote strong { color: #F8FAFC; }
+    #guide-content blockquote { border-left: 2px solid #D97757; padding-left: 1rem; margin: 1rem 0; color: #6B6560; font-size: 0.8rem; }
+    #guide-content blockquote strong { color: #131314; }
     #guide-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.75rem; }
-    #guide-content th { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #334155; color: #94A3B8; }
-    #guide-content td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #22222266; color: #94A3B8; }
-    #guide-content td code, #guide-content th code { background: #0D1117; padding: 0.15rem 0.4rem; border-radius: 3px; color: #22C55E; font-size: 0.75rem; }
-    #guide-content strong { color: #F8FAFC; }
-    #guide-content hr { border: none; border-top: 1px solid #334155; margin: 2rem 0; }
-    #guide-content a { color: #22C55E; text-decoration: underline; }
+    #guide-content th { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #E5DED6; color: #6B6560; }
+    #guide-content td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #E5DED666; color: #6B6560; }
+    #guide-content td code, #guide-content th code { background: #F5F2EF; padding: 0.15rem 0.4rem; border-radius: 3px; color: #D97757; font-size: 0.75rem; }
+    #guide-content strong { color: #131314; }
+    #guide-content hr { border: none; border-top: 1px solid #E5DED6; margin: 2rem 0; }
+    #guide-content a { color: #D97757; text-decoration: underline; }
 
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
@@ -194,9 +194,9 @@
       })
       .catch(() => {
         document.getElementById('guide-content').innerHTML = `
-          <p style="color:#94A3B8;font-size:0.8rem;">
+          <p style="color:#6B6560;font-size:0.8rem;">
             Could not load guide.
-            <a href="${GUIDE_URL}" style="color:#22C55E;">View on GitHub ↗</a>
+            <a href="${GUIDE_URL}" style="color:#D97757;">View on GitHub ↗</a>
           </p>`;
       });
 

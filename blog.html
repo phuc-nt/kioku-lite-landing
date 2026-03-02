@@ -12,14 +12,14 @@
       theme: {
         extend: {
           colors: {
-            bg:           '#0F172A',
-            surface:      '#1E293B',
-            muted:        '#334155',
-            accent:       '#22C55E',
-            'accent-dim': '#16A34A',
-            text:         '#F8FAFC',
-            'text-muted': '#94A3B8',
-            border:       '#334155',
+            bg:           '#F9F6F2',
+            surface:      '#FFFFFF',
+            muted:        '#E5DED6',
+            accent:       '#D97757',
+            'accent-dim': '#C06543',
+            text:         '#131314',
+            'text-muted': '#6B6560',
+            border:       '#E5DED6',
           },
           fontFamily: { mono: ['"Space Mono"', 'Courier New', 'monospace'] },
         },
@@ -34,40 +34,40 @@
   <!-- Markdown renderer -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <!-- Syntax highlighting -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 
   <style>
     body { font-family: 'Space Mono', monospace; }
     .grid-bg {
       background-image:
-        linear-gradient(rgba(34,197,94,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(34,197,94,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(217,119,87,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217,119,87,0.03) 1px, transparent 1px);
       background-size: 48px 48px;
     }
     .doc-card { transition: border-color 0.2s, box-shadow 0.2s; }
-    .doc-card:hover { border-color: rgba(34,197,94,0.4); box-shadow: 0 0 24px rgba(34,197,94,0.06); }
+    .doc-card:hover { border-color: rgba(217,119,87,0.4); box-shadow: 0 0 24px rgba(217,119,87,0.06); }
 
-    /* ── Prose styles (dark mode) ─────────────────────────────────── */
-    .prose { color: #CBD5E1; line-height: 1.8; }
-    .prose h1 { font-size: 1.875rem; font-weight: 700; color: #F8FAFC; margin: 0 0 1.5rem; line-height: 1.25; }
-    .prose h2 { font-size: 1.25rem; font-weight: 700; color: #F8FAFC; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #334155; }
-    .prose h3 { font-size: 1.0625rem; font-weight: 700; color: #E2E8F0; margin: 2rem 0 0.5rem; }
-    .prose h4 { font-size: 0.75rem; font-weight: 700; color: #94A3B8; margin: 1.5rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    /* ── Prose styles (light mode) ─────────────────────────────────── */
+    .prose { color: #4A4540; line-height: 1.8; }
+    .prose h1 { font-size: 1.875rem; font-weight: 700; color: #131314; margin: 0 0 1.5rem; line-height: 1.25; }
+    .prose h2 { font-size: 1.25rem; font-weight: 700; color: #131314; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E5DED6; }
+    .prose h3 { font-size: 1.0625rem; font-weight: 700; color: #2A2520; margin: 2rem 0 0.5rem; }
+    .prose h4 { font-size: 0.75rem; font-weight: 700; color: #6B6560; margin: 1.5rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
     .prose p  { margin: 1rem 0; }
-    .prose a  { color: #22C55E; text-decoration: underline; text-underline-offset: 3px; }
-    .prose a:hover { color: #4ADE80; }
-    .prose strong { color: #F8FAFC; font-weight: 700; }
-    .prose em { color: #CBD5E1; font-style: italic; }
+    .prose a  { color: #D97757; text-decoration: underline; text-underline-offset: 3px; }
+    .prose a:hover { color: #C06543; }
+    .prose strong { color: #131314; font-weight: 700; }
+    .prose em { color: #4A4540; font-style: italic; }
     /* inline code */
     .prose :not(pre) > code {
-      color: #22C55E; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.15);
+      color: #D97757; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.15);
       padding: 0.12em 0.45em; border-radius: 4px;
       font-family: 'Space Mono', monospace; font-size: 0.825em;
     }
     /* code block */
     .prose pre {
-      background: #1E293B; border: 1px solid #334155; border-radius: 12px;
+      background: #F0EBE3; border: 1px solid #E5DED6; border-radius: 12px;
       padding: 1.25rem 1.5rem; margin: 1.5rem 0; overflow-x: auto;
     }
     .prose pre code {
@@ -75,19 +75,19 @@
       font-size: 0.8125rem; font-family: 'Space Mono', monospace;
     }
     .prose blockquote {
-      border-left: 3px solid #22C55E; padding-left: 1.25rem; margin: 1.5rem 0;
-      color: #94A3B8; font-style: italic;
+      border-left: 3px solid #D97757; padding-left: 1.25rem; margin: 1.5rem 0;
+      color: #6B6560; font-style: italic;
     }
     .prose blockquote p { margin: 0.5rem 0; }
     .prose ul { list-style-type: disc; padding-left: 1.5rem; margin: 1rem 0; }
     .prose ol { list-style-type: decimal; padding-left: 1.5rem; margin: 1rem 0; }
     .prose li { margin: 0.4rem 0; }
     .prose li > ul, .prose li > ol { margin: 0.25rem 0; }
-    .prose hr { border: none; border-top: 1px solid #334155; margin: 2.5rem 0; }
+    .prose hr { border: none; border-top: 1px solid #E5DED6; margin: 2.5rem 0; }
     .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
-    .prose th { background: #1E293B; color: #F8FAFC; font-weight: 700; padding: 0.6rem 1rem; border: 1px solid #334155; text-align: left; }
-    .prose td { padding: 0.6rem 1rem; border: 1px solid #334155; }
-    .prose tr:nth-child(even) td { background: rgba(30,41,59,0.6); }
+    .prose th { background: #F0EBE3; color: #131314; font-weight: 700; padding: 0.6rem 1rem; border: 1px solid #E5DED6; text-align: left; }
+    .prose td { padding: 0.6rem 1rem; border: 1px solid #E5DED6; }
+    .prose tr:nth-child(even) td { background: rgba(240,235,227,0.6); }
     .prose img { max-width: 100%; border-radius: 8px; margin: 1.5rem auto; display: block; }
     /* hljs theme override: keep background transparent inside .prose pre */
     .prose pre .hljs { background: transparent; padding: 0; }
