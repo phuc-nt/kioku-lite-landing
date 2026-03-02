@@ -30,7 +30,7 @@
   <!-- All fonts used across sections -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@700&family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@700&family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
 
   <style>
     body { font-family: 'Space Mono', monospace; }
@@ -213,7 +213,7 @@
   </h1>
   <p class="text-text-muted text-sm max-w-lg mx-auto" style="line-height:1.75;">
     Section 1 — 5 hoạ tiết icon graph.<br>
-    Section 2 — 5 biến thể font &amp; typo.
+    Section 2 — 5 font · lowercase · icon to ngang chữ.
   </p>
 </section>
 
@@ -436,25 +436,36 @@
   </div>
 </section>
 
-<!-- ─── SECTION 2: TYPOGRAPHY ────────────────────────────────────── -->
+<!-- ─── SECTION 2: LOWERCASE ─────────────────────────────────────── -->
+<!--
+  Icon sizing logic (lowercase):
+  • align-items: baseline so icon bottom sits on text baseline
+  • viewBox="0 0 56 56" — circle r=22 spans y=6..50, padding 6px each side
+  • To render circle at cap-height px (H), need SVG height = H × 56/44
+  • Space Mono 700 72px  → cap ≈ 46px → svg height = 46×56/44 = 58.5 → 59
+  • Space Grotesk 700 72px → cap ≈ 50px → svg height = 50×56/44 = 63.6 → 64
+  • Syne 800 72px         → cap ≈ 50px → same 64
+  • DM Mono 300 72px      → cap ≈ 45px → svg height = 45×56/44 = 57.3 → 57
+  • Width = cap-height (square bounding box keeps circle round with meet)
+-->
 <section class="pb-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
 
   <div class="flex items-center gap-4 mb-8">
-    <p class="text-xs text-accent tracking-widest whitespace-nowrap">// 02 — TYPOGRAPHY</p>
+    <p class="text-xs text-accent tracking-widest whitespace-nowrap">// 02 — LOWERCASE</p>
     <div class="flex-1 border-t border-border"></div>
-    <p class="text-xs text-text-muted whitespace-nowrap">5 font treatments · Organic icon</p>
+    <p class="text-xs text-text-muted whitespace-nowrap">5 font treatments · icon to ngang chữ</p>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-    <!-- ── T-01: SPACE MONO 700 (baseline) ──────────────────────── -->
+    <!-- ── T-01: SPACE MONO 700 lowercase ───────────────────────── -->
     <div class="logo-card reveal bg-surface border border-accent/30 rounded-2xl p-8 flex flex-col gap-6">
       <div class="flex items-start justify-between">
         <div>
           <p class="text-xs text-accent tracking-widest mb-0.5">// T-01 · MONO</p>
-          <p class="text-xs text-text-muted mt-0.5 font-bold" style="color:#94A3B8">Space Mono 700</p>
+          <p class="text-xs font-bold mt-0.5" style="color:#94A3B8">Space Mono 700</p>
           <p class="text-xs text-text-muted mt-1 max-w-xs leading-relaxed">
-            Baseline. Terminal, kỹ thuật. Sinh ra để đọc như code.
+            Lowercase mono. Mềm hơn uppercase nhưng vẫn cứng cáp — icon trở thành trọng tâm của tên.
           </p>
         </div>
         <div class="bg-white rounded-lg p-2 shrink-0 flex items-center justify-center" style="width:48px;height:48px;">
@@ -464,22 +475,22 @@
         </div>
       </div>
       <div class="flex justify-center">
-        <div style="display:inline-flex;align-items:center;font-family:'Space Mono',monospace;font-weight:700;line-height:1;font-size:72px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="46" height="72" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Space Mono',monospace;font-weight:700;font-size:72px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="46" height="59" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-text-muted tracking-widest">small</span>
-        <div style="display:inline-flex;align-items:center;font-family:'Space Mono',monospace;font-weight:700;line-height:1;font-size:24px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="15" height="24" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Space Mono',monospace;font-weight:700;font-size:24px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="15" height="20" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <button onclick="copyIconSvg(0,this)"
@@ -489,14 +500,14 @@
       </button>
     </div>
 
-    <!-- ── T-02: SPACE MONO 700 · WIDE TRACKING ─────────────────── -->
+    <!-- ── T-02: SPACE MONO 700 · WIDE TRACKING lowercase ────────── -->
     <div class="logo-card reveal bg-surface border border-border rounded-2xl p-8 flex flex-col gap-6">
       <div class="flex items-start justify-between">
         <div>
           <p class="text-xs text-accent tracking-widest mb-0.5">// T-02 · WIDE</p>
           <p class="text-xs font-bold mt-0.5" style="color:#94A3B8">Space Mono 700 · letter-spacing 0.28em</p>
           <p class="text-xs text-text-muted mt-1 max-w-xs leading-relaxed">
-            Kiến trúc, khoảng trống. Wordmark rộng ra, mang cảm giác nghiêm túc và có chiều sâu.
+            Giãn cách rộng kết hợp lowercase. Thoáng hơn, lạnh hơn — cảm giác label hoặc tag kỹ thuật.
           </p>
         </div>
         <div class="bg-white rounded-lg p-2 shrink-0 flex items-center justify-center" style="width:48px;height:48px;">
@@ -506,22 +517,22 @@
         </div>
       </div>
       <div class="flex justify-center overflow-x-auto">
-        <div style="display:inline-flex;align-items:center;font-family:'Space Mono',monospace;font-weight:700;line-height:1;font-size:72px;white-space:nowrap;">
-          <span style="color:#F8FAFC;letter-spacing:0.28em">KI</span>
-          <svg viewBox="0 0 56 56" width="46" height="72" style="color:#22C55E;flex-shrink:0;display:block;margin:0 0.14em;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Space Mono',monospace;font-weight:700;font-size:72px;line-height:1;white-space:nowrap;">
+          <span style="color:#F8FAFC;letter-spacing:0.28em">ki</span>
+          <svg viewBox="0 0 56 56" width="46" height="59" style="color:#22C55E;flex-shrink:0;display:block;margin:0 0.14em;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC;letter-spacing:0.28em">KU</span>
+          <span style="color:#F8FAFC;letter-spacing:0.28em">ku</span>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-text-muted tracking-widest">small</span>
-        <div style="display:inline-flex;align-items:center;font-family:'Space Mono',monospace;font-weight:700;line-height:1;font-size:24px;">
-          <span style="color:#F8FAFC;letter-spacing:0.28em">KI</span>
-          <svg viewBox="0 0 56 56" width="15" height="24" style="color:#22C55E;flex-shrink:0;display:block;margin:0 0.1em;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Space Mono',monospace;font-weight:700;font-size:24px;line-height:1;">
+          <span style="color:#F8FAFC;letter-spacing:0.28em">ki</span>
+          <svg viewBox="0 0 56 56" width="15" height="20" style="color:#22C55E;flex-shrink:0;display:block;margin:0 0.1em;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC;letter-spacing:0.28em">KU</span>
+          <span style="color:#F8FAFC;letter-spacing:0.28em">ku</span>
         </div>
       </div>
       <button onclick="copyIconSvg(0,this)"
@@ -531,14 +542,14 @@
       </button>
     </div>
 
-    <!-- ── T-03: SPACE GROTESK 700 ───────────────────────────────── -->
+    <!-- ── T-03: SPACE GROTESK 700 lowercase ─────────────────────── -->
     <div class="logo-card reveal bg-surface border border-border rounded-2xl p-8 flex flex-col gap-6">
       <div class="flex items-start justify-between">
         <div>
           <p class="text-xs text-accent tracking-widest mb-0.5">// T-03 · GROTESK</p>
           <p class="text-xs font-bold mt-0.5" style="color:#94A3B8">Space Grotesk 700</p>
           <p class="text-xs text-text-muted mt-1 max-w-xs leading-relaxed">
-            Anh em sans của Space Mono. Chia sẻ DNA thiết kế — sạch hơn, thân thiện hơn, vẫn kỹ thuật.
+            Lowercase grotesk tạo cảm giác product brand. Gần gũi, hiện đại — kiểu logo startup.
           </p>
         </div>
         <div class="bg-white rounded-lg p-2 shrink-0 flex items-center justify-center" style="width:48px;height:48px;">
@@ -548,22 +559,22 @@
         </div>
       </div>
       <div class="flex justify-center">
-        <div style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1;font-size:72px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="50" height="72" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:72px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="50" height="64" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-text-muted tracking-widest">small</span>
-        <div style="display:inline-flex;align-items:center;font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1;font-size:24px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="17" height="24" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:24px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="17" height="21" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <button onclick="copyIconSvg(0,this)"
@@ -573,14 +584,14 @@
       </button>
     </div>
 
-    <!-- ── T-04: BEBAS NEUE (DISPLAY) ────────────────────────────── -->
+    <!-- ── T-04: SYNE 800 lowercase ──────────────────────────────── -->
     <div class="logo-card reveal bg-surface border border-border rounded-2xl p-8 flex flex-col gap-6">
       <div class="flex items-start justify-between">
         <div>
-          <p class="text-xs text-accent tracking-widest mb-0.5">// T-04 · DISPLAY</p>
-          <p class="text-xs font-bold mt-0.5" style="color:#94A3B8">Bebas Neue</p>
+          <p class="text-xs text-accent tracking-widest mb-0.5">// T-04 · GEOMETRIC</p>
+          <p class="text-xs font-bold mt-0.5" style="color:#94A3B8">Syne 800</p>
           <p class="text-xs text-text-muted mt-1 max-w-xs leading-relaxed">
-            Condensed display, uy lực. Cao, nhọn, editorial. Icon organic tạo điểm nhấn bất ngờ.
+            Display geometric. Letterform lạ, góc cạnh — lowercase "k" và "u" Syne rất đặc trưng.
           </p>
         </div>
         <div class="bg-white rounded-lg p-2 shrink-0 flex items-center justify-center" style="width:48px;height:48px;">
@@ -590,22 +601,22 @@
         </div>
       </div>
       <div class="flex justify-center">
-        <div style="display:inline-flex;align-items:center;font-family:'Bebas Neue',sans-serif;font-weight:400;line-height:1;font-size:88px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="49" height="88" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Syne',sans-serif;font-weight:800;font-size:72px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="50" height="64" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-text-muted tracking-widest">small</span>
-        <div style="display:inline-flex;align-items:center;font-family:'Bebas Neue',sans-serif;font-weight:400;line-height:1;font-size:30px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="17" height="30" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Syne',sans-serif;font-weight:800;font-size:24px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="17" height="21" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <button onclick="copyIconSvg(0,this)"
@@ -615,14 +626,14 @@
       </button>
     </div>
 
-    <!-- ── T-05: DM MONO 300 (LIGHT) ─────────────────────────────── -->
+    <!-- ── T-05: DM MONO 300 lowercase ───────────────────────────── -->
     <div class="logo-card reveal bg-surface border border-border rounded-2xl p-8 flex flex-col gap-6 md:col-span-2 md:max-w-md md:w-full md:mx-auto">
       <div class="flex items-start justify-between">
         <div>
           <p class="text-xs text-accent tracking-widest mb-0.5">// T-05 · LIGHT</p>
           <p class="text-xs font-bold mt-0.5" style="color:#94A3B8">DM Mono 300</p>
           <p class="text-xs text-text-muted mt-1 max-w-xs leading-relaxed">
-            Siêu nhẹ, tinh tế. Trọng lượng thị giác dồn hết vào icon. Elegant contrast giữa hairline text và graph đặc.
+            Hairline lowercase. Chữ gần như tan biến — icon nổi bật hoàn toàn. Minimal nhất trong 5 phiên bản.
           </p>
         </div>
         <div class="bg-white rounded-lg p-2 shrink-0 flex items-center justify-center" style="width:48px;height:48px;">
@@ -632,22 +643,22 @@
         </div>
       </div>
       <div class="flex justify-center">
-        <div style="display:inline-flex;align-items:center;font-family:'DM Mono',monospace;font-weight:300;line-height:1;font-size:72px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="44" height="72" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'DM Mono',monospace;font-weight:300;font-size:72px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="44" height="57" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-text-muted tracking-widest">small</span>
-        <div style="display:inline-flex;align-items:center;font-family:'DM Mono',monospace;font-weight:300;line-height:1;font-size:24px;">
-          <span style="color:#F8FAFC">KI</span>
-          <svg viewBox="0 0 56 56" width="14" height="24" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'DM Mono',monospace;font-weight:300;font-size:24px;line-height:1;">
+          <span style="color:#F8FAFC">ki</span>
+          <svg viewBox="0 0 56 56" width="14" height="19" style="color:#22C55E;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#F8FAFC">KU</span>
+          <span style="color:#F8FAFC">ku</span>
         </div>
       </div>
       <button onclick="copyIconSvg(0,this)"
