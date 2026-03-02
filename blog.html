@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,14 +13,14 @@
       theme: {
         extend: {
           colors: {
-            bg:           '#F9F6F2',
-            surface:      '#FFFFFF',
-            muted:        '#E5DED6',
-            accent:       '#D97757',
+            bg: '#F9F6F2',
+            surface: '#FFFFFF',
+            muted: '#E5DED6',
+            accent: '#D97757',
             'accent-dim': '#C06543',
-            text:         '#131314',
+            text: '#131314',
             'text-muted': '#6B6560',
-            border:       '#E5DED6',
+            border: '#E5DED6',
           },
           fontFamily: { mono: ['"Space Mono"', 'Courier New', 'monospace'] },
         },
@@ -40,270 +41,423 @@
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
   <style>
-    body { font-family: 'Space Mono', monospace; }
+    body {
+      font-family: 'Space Mono', monospace;
+    }
+
     .grid-bg {
       background-image:
-        linear-gradient(rgba(217,119,87,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(217,119,87,0.03) 1px, transparent 1px);
+        linear-gradient(rgba(217, 119, 87, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(217, 119, 87, 0.03) 1px, transparent 1px);
       background-size: 48px 48px;
     }
-    .doc-card { transition: border-color 0.2s, box-shadow 0.2s; }
-    .doc-card:hover { border-color: rgba(217,119,87,0.4); box-shadow: 0 0 24px rgba(217,119,87,0.06); }
+
+    .doc-card {
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .doc-card:hover {
+      border-color: rgba(217, 119, 87, 0.4);
+      box-shadow: 0 0 24px rgba(217, 119, 87, 0.06);
+    }
 
     /* ── Prose styles (light mode) ─────────────────────────────────── */
-    .prose { color: #4A4540; line-height: 1.8; }
-    .prose h1 { font-size: 1.875rem; font-weight: 700; color: #131314; margin: 0 0 1.5rem; line-height: 1.25; }
-    .prose h2 { font-size: 1.25rem; font-weight: 700; color: #131314; margin: 2.5rem 0 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #E5DED6; }
-    .prose h3 { font-size: 1.0625rem; font-weight: 700; color: #2A2520; margin: 2rem 0 0.5rem; }
-    .prose h4 { font-size: 0.75rem; font-weight: 700; color: #6B6560; margin: 1.5rem 0 0.5rem; text-transform: uppercase; letter-spacing: 0.08em; }
-    .prose p  { margin: 1rem 0; }
-    .prose a  { color: #D97757; text-decoration: underline; text-underline-offset: 3px; }
-    .prose a:hover { color: #C06543; }
-    .prose strong { color: #131314; font-weight: 700; }
-    .prose em { color: #4A4540; font-style: italic; }
-    /* inline code */
-    .prose :not(pre) > code {
-      color: #D97757; background: rgba(217,119,87,0.1); border: 1px solid rgba(217,119,87,0.15);
-      padding: 0.12em 0.45em; border-radius: 4px;
-      font-family: 'Space Mono', monospace; font-size: 0.825em;
+    .prose {
+      color: #4A4540;
+      line-height: 1.8;
     }
+
+    .prose h1 {
+      font-size: 1.875rem;
+      font-weight: 700;
+      color: #131314;
+      margin: 0 0 1.5rem;
+      line-height: 1.25;
+    }
+
+    .prose h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #131314;
+      margin: 2.5rem 0 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #E5DED6;
+    }
+
+    .prose h3 {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: #2A2520;
+      margin: 2rem 0 0.5rem;
+    }
+
+    .prose h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #6B6560;
+      margin: 1.5rem 0 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .prose p {
+      margin: 1rem 0;
+    }
+
+    .prose a {
+      color: #D97757;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .prose a:hover {
+      color: #C06543;
+    }
+
+    .prose strong {
+      color: #131314;
+      font-weight: 700;
+    }
+
+    .prose em {
+      color: #4A4540;
+      font-style: italic;
+    }
+
+    /* inline code */
+    .prose :not(pre)>code {
+      color: #D97757;
+      background: rgba(217, 119, 87, 0.1);
+      border: 1px solid rgba(217, 119, 87, 0.15);
+      padding: 0.12em 0.45em;
+      border-radius: 4px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.825em;
+    }
+
     /* code block */
     .prose pre {
-      background: #F0EBE3; border: 1px solid #E5DED6; border-radius: 12px;
-      padding: 1.25rem 1.5rem; margin: 1.5rem 0; overflow-x: auto;
+      background: #F0EBE3;
+      border: 1px solid #E5DED6;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
     }
+
     .prose pre code {
-      background: none; border: none; color: inherit; padding: 0;
-      font-size: 0.8125rem; font-family: 'Space Mono', monospace;
+      background: none;
+      border: none;
+      color: inherit;
+      padding: 0;
+      font-size: 0.8125rem;
+      font-family: 'Space Mono', monospace;
     }
+
     .prose blockquote {
-      border-left: 3px solid #D97757; padding-left: 1.25rem; margin: 1.5rem 0;
-      color: #6B6560; font-style: italic;
+      border-left: 3px solid #D97757;
+      padding-left: 1.25rem;
+      margin: 1.5rem 0;
+      color: #6B6560;
+      font-style: italic;
     }
-    .prose blockquote p { margin: 0.5rem 0; }
-    .prose ul { list-style-type: disc; padding-left: 1.5rem; margin: 1rem 0; }
-    .prose ol { list-style-type: decimal; padding-left: 1.5rem; margin: 1rem 0; }
-    .prose li { margin: 0.4rem 0; }
-    .prose li > ul, .prose li > ol { margin: 0.25rem 0; }
-    .prose hr { border: none; border-top: 1px solid #E5DED6; margin: 2.5rem 0; }
-    .prose table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
-    .prose th { background: #F0EBE3; color: #131314; font-weight: 700; padding: 0.6rem 1rem; border: 1px solid #E5DED6; text-align: left; }
-    .prose td { padding: 0.6rem 1rem; border: 1px solid #E5DED6; }
-    .prose tr:nth-child(even) td { background: rgba(240,235,227,0.6); }
-    .prose img { max-width: 100%; border-radius: 8px; margin: 1.5rem auto; display: block; }
+
+    .prose blockquote p {
+      margin: 0.5rem 0;
+    }
+
+    .prose ul {
+      list-style-type: disc;
+      padding-left: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .prose ol {
+      list-style-type: decimal;
+      padding-left: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .prose li {
+      margin: 0.4rem 0;
+    }
+
+    .prose li>ul,
+    .prose li>ol {
+      margin: 0.25rem 0;
+    }
+
+    .prose hr {
+      border: none;
+      border-top: 1px solid #E5DED6;
+      margin: 2.5rem 0;
+    }
+
+    .prose table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.875rem;
+    }
+
+    .prose th {
+      background: #F0EBE3;
+      color: #131314;
+      font-weight: 700;
+      padding: 0.6rem 1rem;
+      border: 1px solid #E5DED6;
+      text-align: left;
+    }
+
+    .prose td {
+      padding: 0.6rem 1rem;
+      border: 1px solid #E5DED6;
+    }
+
+    .prose tr:nth-child(even) td {
+      background: rgba(240, 235, 227, 0.6);
+    }
+
+    .prose img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 1.5rem auto;
+      display: block;
+    }
+
     /* hljs theme override: keep background transparent inside .prose pre */
-    .prose pre .hljs { background: transparent; padding: 0; }
+    .prose pre .hljs {
+      background: transparent;
+      padding: 0;
+    }
+
     /* Mermaid diagram container */
     .prose .mermaid {
-      background: #FDFCFB; border: 1px solid #E5DED6; border-radius: 12px;
-      padding: 1.5rem; margin: 1.5rem 0; overflow-x: auto; text-align: center;
+      background: #FDFCFB;
+      border: 1px solid #E5DED6;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      overflow-x: auto;
+      text-align: center;
     }
-    .prose .mermaid svg { max-width: 100%; height: auto; }
+
+    .prose .mermaid svg {
+      max-width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 
 <body class="bg-bg text-text font-mono grid-bg min-h-screen antialiased">
 
-<!-- ─── NAVBAR ─────────────────────────────────────────────────────── -->
-<nav class="fixed top-4 left-4 right-4 z-50 flex items-center justify-between
+  <!-- ─── NAVBAR ─────────────────────────────────────────────────────── -->
+  <nav class="fixed top-4 left-4 right-4 z-50 flex items-center justify-between
             bg-surface/80 backdrop-blur-sm border border-border/50
             rounded-xl px-5 py-3 max-w-5xl mx-auto">
-  <a href="index.html"
-     class="flex items-center gap-2 cursor-pointer group"
-     aria-label="Back to Kioku Lite home">
-    <svg viewBox="0 0 24 24" class="w-4 h-4 text-text-muted group-hover:text-accent transition-colors"
-         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M19 12H5M12 5l-7 7 7 7"/>
-    </svg>
-    <span class="text-xs text-text-muted group-hover:text-accent transition-colors duration-200">
-      kioku<span class="text-accent">-lite</span>
-    </span>
-  </a>
-  <span id="nav-label" class="text-xs text-text-muted tracking-widest hidden sm:block">// DOCS</span>
-  <div class="w-24 sm:hidden"></div>
-</nav>
-
-<!-- ─── APP ──────────────────────────────────────────────────────────
-     JS renders either the list view or a post detail view here.     -->
-<main id="app" class="min-h-screen"></main>
-
-<!-- ─── FOOTER ────────────────────────────────────────────────────── -->
-<footer class="border-t border-border/50 py-10 px-4 sm:px-6 text-center">
-  <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-    <a href="index.html" class="flex items-center gap-2 hover:text-accent transition-colors">
-      <svg viewBox="0 0 24 24" class="w-4 h-4 text-accent" fill="none" stroke="currentColor" stroke-width="2"
-           stroke-linecap="round" stroke-linejoin="round">
-        <ellipse cx="12" cy="5" rx="9" ry="3"/>
-        <path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5"/>
-        <path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3"/>
+    <a href="index.html" class="flex items-center gap-2 cursor-pointer group" aria-label="Back to Kioku Lite home">
+      <svg viewBox="0 0 24 24" class="w-4 h-4 text-text-muted group-hover:text-accent transition-colors" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 5l-7 7 7 7" />
       </svg>
-      <span class="text-xs text-text-muted font-bold">kioku<span class="text-accent">-lite</span></span>
+      <span class="text-xs text-text-muted group-hover:text-accent transition-colors duration-200">
+        kioku<span class="text-accent">-lite</span>
+      </span>
     </a>
-    <p class="text-xs text-text-muted">
-      Built with <span class="text-accent">SQLite + FastEmbed + Python</span> · MIT License
-    </p>
-    <div class="flex items-center gap-4 text-xs text-text-muted">
-      <a href="https://github.com/phuc-nt/kioku-agent-kit-lite" target="_blank" rel="noopener noreferrer"
-         class="hover:text-accent transition-colors">GitHub</a>
-      <a href="https://pypi.org/project/kioku-lite/" target="_blank" rel="noopener noreferrer"
-         class="hover:text-accent transition-colors">PyPI</a>
+    <span id="nav-label" class="text-xs text-text-muted tracking-widest hidden sm:block">// DOCS</span>
+    <div class="w-24 sm:hidden"></div>
+  </nav>
+
+  <!-- ─── APP ──────────────────────────────────────────────────────────
+     JS renders either the list view or a post detail view here.     -->
+  <main id="app" class="min-h-screen"></main>
+
+  <!-- ─── FOOTER ────────────────────────────────────────────────────── -->
+  <footer class="border-t border-border/50 py-10 px-4 sm:px-6 text-center">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+      <a href="index.html" class="flex items-center gap-2 hover:text-accent transition-colors">
+        <svg viewBox="0 0 24 24" class="w-4 h-4 text-accent" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <ellipse cx="12" cy="5" rx="9" ry="3" />
+          <path d="M3 5v14c0 1.657 4.03 3 9 3s9-1.343 9-3V5" />
+          <path d="M3 12c0 1.657 4.03 3 9 3s9-1.343 9-3" />
+        </svg>
+        <span class="text-xs text-text-muted font-bold">kioku<span class="text-accent">-lite</span></span>
+      </a>
+      <p class="text-xs text-text-muted">
+        Built with <span class="text-accent">SQLite + FastEmbed + Python</span> · MIT License
+      </p>
+      <div class="flex items-center gap-4 text-xs text-text-muted">
+        <a href="https://github.com/phuc-nt/kioku-agent-kit-lite" target="_blank" rel="noopener noreferrer"
+          class="hover:text-accent transition-colors">GitHub</a>
+        <a href="https://pypi.org/project/kioku-lite/" target="_blank" rel="noopener noreferrer"
+          class="hover:text-accent transition-colors">PyPI</a>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<!-- ─── JS ────────────────────────────────────────────────────────── -->
-<script>
-// ═══════════════════════════════════════════════════════════════════════
-//  POST CONFIG
-//  Điền src khi có link markdown từ GitHub.
-//  src nhận cả hai dạng:
-//    • Raw URL : https://raw.githubusercontent.com/user/repo/branch/file.md
-//    • Blob URL: https://github.com/user/repo/blob/branch/file.md  (auto-convert)
-// ═══════════════════════════════════════════════════════════════════════
-const BASE = 'https://raw.githubusercontent.com/phuc-nt/kioku-agent-kit-lite/main/docs/architecture/';
+  <!-- ─── JS ────────────────────────────────────────────────────────── -->
+  <script>
+    // ═══════════════════════════════════════════════════════════════════════
+    //  POST CONFIG
+    //  Điền src khi có link markdown từ GitHub.
+    //  src nhận cả hai dạng:
+    //    • Raw URL : https://raw.githubusercontent.com/user/repo/branch/file.md
+    //    • Blob URL: https://github.com/user/repo/blob/branch/file.md  (auto-convert)
+    // ═══════════════════════════════════════════════════════════════════════
+    const BASE = 'https://raw.githubusercontent.com/phuc-nt/kioku-agent-kit-lite/main/docs/architecture/';
+    const BLOG_BASE = 'https://raw.githubusercontent.com/phuc-nt/kioku-agent-kit-lite/main/docs/blog/';
 
-const POSTS = [
-  {
-    slug: 'system-architecture',
-    title: 'System Architecture',
-    date: '2026-03-02',
-    desc: 'System overview: tri-hybrid search (BM25 + Vector + KG), data flow from save → index → search → recall.',
-    tags: ['architecture', 'overview'],
-    src: BASE + '01-system.md',
-  },
-  {
-    slug: 'write-save-kg-index',
-    title: 'Write Architecture — Save & KG Index',
-    date: '2026-03-02',
-    desc: 'Detailed write pipeline: save memory to SQLite FTS5 + sqlite-vec, then agent autonomously kg-indexes entities & relationships.',
-    tags: ['architecture', 'write', 'kg'],
-    src: BASE + '02-write-save-kg-index.md',
-  },
-  {
-    slug: 'search-architecture',
-    title: 'Search Architecture',
-    date: '2026-03-02',
-    desc: 'Tri-hybrid search pipeline: BM25 keyword → vector semantic → KG traversal, fused by Reciprocal Rank Fusion (RRF) reranker.',
-    tags: ['architecture', 'search', 'rrf'],
-    src: BASE + '03-search.md',
-  },
-  {
-    slug: 'kg-open-schema',
-    title: 'KG Open Schema',
-    date: '2026-03-02',
-    desc: 'Open entity & relationship model: agent defines types freely with no rigid schema. Supports aliases, weights, and metadata.',
-    tags: ['architecture', 'kg', 'schema'],
-    src: BASE + '04-kg-open-schema.md',
-  },
-  {
-    slug: 'memory-comparison',
-    title: 'Memory Comparison',
-    date: '2026-03-02',
-    desc: 'Kioku Lite vs Claude Code built-in memory vs OpenClaw: persistence, search quality, cost, and trade-off analysis.',
-    tags: ['comparison', 'overview'],
-    src: BASE + '05-memory-comparison.md',
-  },
-];
+    const POSTS = [
+      {
+        slug: 'kioku-intro-vn',
+        title: 'Kioku: Tại sao tôi tự build một bộ nhớ có Knowledge Graph cho AI agent của mình',
+        date: '2026-03-02',
+        desc: 'Ý tưởng, kiến trúc, và hành trình xây dựng Kioku — một Personal Memory Engine open-source cho AI Agent.',
+        tags: ['blog', 'vietnamese', 'intro'],
+        src: BLOG_BASE + '2026-03-02-kioku-lite-intro.md',
+      },
+      {
+        slug: 'system-architecture',
+        title: 'System Architecture',
+        date: '2026-03-02',
+        desc: 'System overview: tri-hybrid search (BM25 + Vector + KG), data flow from save → index → search → recall.',
+        tags: ['architecture', 'overview'],
+        src: BASE + '01-system.md',
+      },
+      {
+        slug: 'write-save-kg-index',
+        title: 'Write Architecture — Save & KG Index',
+        date: '2026-03-02',
+        desc: 'Detailed write pipeline: save memory to SQLite FTS5 + sqlite-vec, then agent autonomously kg-indexes entities & relationships.',
+        tags: ['architecture', 'write', 'kg'],
+        src: BASE + '02-write-save-kg-index.md',
+      },
+      {
+        slug: 'search-architecture',
+        title: 'Search Architecture',
+        date: '2026-03-02',
+        desc: 'Tri-hybrid search pipeline: BM25 keyword → vector semantic → KG traversal, fused by Reciprocal Rank Fusion (RRF) reranker.',
+        tags: ['architecture', 'search', 'rrf'],
+        src: BASE + '03-search.md',
+      },
+      {
+        slug: 'kg-open-schema',
+        title: 'KG Open Schema',
+        date: '2026-03-02',
+        desc: 'Open entity & relationship model: agent defines types freely with no rigid schema. Supports aliases, weights, and metadata.',
+        tags: ['architecture', 'kg', 'schema'],
+        src: BASE + '04-kg-open-schema.md',
+      },
+      {
+        slug: 'memory-comparison',
+        title: 'Memory Comparison',
+        date: '2026-03-02',
+        desc: 'Kioku Lite vs Claude Code built-in memory vs OpenClaw: persistence, search quality, cost, and trade-off analysis.',
+        tags: ['comparison', 'overview'],
+        src: BASE + '05-memory-comparison.md',
+      },
+    ];
 
-// ═══════════════════════════════════════════════════════════════════════
-//  UTILITIES
-// ═══════════════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════════════
+    //  UTILITIES
+    // ═══════════════════════════════════════════════════════════════════════
 
-/** Convert GitHub blob URL → raw.githubusercontent.com URL for fetch. */
-function toRawUrl(url) {
-  if (!url) return '';
-  return url
-    .replace('https://github.com/', 'https://raw.githubusercontent.com/')
-    .replace('/blob/', '/');
-}
+    /** Convert GitHub blob URL → raw.githubusercontent.com URL for fetch. */
+    function toRawUrl(url) {
+      if (!url) return '';
+      return url
+        .replace('https://github.com/', 'https://raw.githubusercontent.com/')
+        .replace('/blob/', '/');
+    }
 
-/** Strip YAML front matter (---…---) from markdown string. */
-function stripFrontMatter(md) {
-  if (!md.startsWith('---')) return md;
-  const end = md.indexOf('\n---', 3);
-  return end !== -1 ? md.slice(end + 4).trimStart() : md;
-}
+    /** Strip YAML front matter (---…---) from markdown string. */
+    function stripFrontMatter(md) {
+      if (!md.startsWith('---')) return md;
+      const end = md.indexOf('\n---', 3);
+      return end !== -1 ? md.slice(end + 4).trimStart() : md;
+    }
 
-/** Read URL hash → slug (empty string = list view). */
-function getSlug() { return location.hash.slice(1); }
+    /** Read URL hash → slug (empty string = list view). */
+    function getSlug() { return location.hash.slice(1); }
 
-/** Format ISO date → English locale. */
-function fmtDate(iso) {
-  if (!iso) return '';
-  try {
-    return new Date(iso).toLocaleDateString('en-US', {
-      year: 'numeric', month: 'long', day: 'numeric',
+    /** Format ISO date → English locale. */
+    function fmtDate(iso) {
+      if (!iso) return '';
+      try {
+        return new Date(iso).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'long', day: 'numeric',
+        });
+      } catch { return iso; }
+    }
+
+    /** Render a tag badge span. */
+    function badge(tag) {
+      return `<span class="inline-block text-xs px-2 py-0.5 rounded-full border border-accent/25 text-accent/70 bg-accent/5 tracking-wide">${tag}</span>`;
+    }
+
+    // ═══════════════════════════════════════════════════════════════════════
+    //  MERMAID INIT (light theme, manual trigger)
+    // ═══════════════════════════════════════════════════════════════════════
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#F0EBE3',
+        primaryBorderColor: '#D97757',
+        primaryTextColor: '#131314',
+        lineColor: '#6B6560',
+        secondaryColor: '#F9F6F2',
+        tertiaryColor: '#FFFFFF',
+        edgeLabelBackground: '#FDFCFB',
+        fontFamily: "'Space Mono', monospace",
+        fontSize: '13px',
+      },
     });
-  } catch { return iso; }
-}
 
-/** Render a tag badge span. */
-function badge(tag) {
-  return `<span class="inline-block text-xs px-2 py-0.5 rounded-full border border-accent/25 text-accent/70 bg-accent/5 tracking-wide">${tag}</span>`;
-}
+    // ═══════════════════════════════════════════════════════════════════════
+    //  MARKED CONFIG
+    // ═══════════════════════════════════════════════════════════════════════
+    marked.use({
+      gfm: true,
+      breaks: false,
+      renderer: {
+        // Open all links in new tab
+        link({ href, title, text }) {
+          const titleAttr = title ? ` title="${title}"` : '';
+          return `<a href="${href || ''}"${titleAttr} target="_blank" rel="noopener noreferrer">${text}</a>`;
+        },
+        // Intercept ```mermaid blocks → render as <div class="mermaid"> (not <pre><code>)
+        code({ text, lang }) {
+          if (lang === 'mermaid') {
+            return `<div class="mermaid">${text}</div>`;
+          }
+          return false; // default rendering for all other languages
+        },
+      },
+    });
 
-// ═══════════════════════════════════════════════════════════════════════
-//  MERMAID INIT (light theme, manual trigger)
-// ═══════════════════════════════════════════════════════════════════════
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'base',
-  themeVariables: {
-    primaryColor:       '#F0EBE3',
-    primaryBorderColor: '#D97757',
-    primaryTextColor:   '#131314',
-    lineColor:          '#6B6560',
-    secondaryColor:     '#F9F6F2',
-    tertiaryColor:      '#FFFFFF',
-    edgeLabelBackground:'#FDFCFB',
-    fontFamily:         "'Space Mono', monospace",
-    fontSize:           '13px',
-  },
-});
+    // ═══════════════════════════════════════════════════════════════════════
+    //  LIST VIEW
+    // ═══════════════════════════════════════════════════════════════════════
+    function renderList() {
+      document.title = 'Docs — Kioku Lite';
+      document.getElementById('nav-label').textContent = '// DOCS';
 
-// ═══════════════════════════════════════════════════════════════════════
-//  MARKED CONFIG
-// ═══════════════════════════════════════════════════════════════════════
-marked.use({
-  gfm: true,
-  breaks: false,
-  renderer: {
-    // Open all links in new tab
-    link({ href, title, text }) {
-      const titleAttr = title ? ` title="${title}"` : '';
-      return `<a href="${href || ''}"${titleAttr} target="_blank" rel="noopener noreferrer">${text}</a>`;
-    },
-    // Intercept ```mermaid blocks → render as <div class="mermaid"> (not <pre><code>)
-    code({ text, lang }) {
-      if (lang === 'mermaid') {
-        return `<div class="mermaid">${text}</div>`;
-      }
-      return false; // default rendering for all other languages
-    },
-  },
-});
+      const cards = POSTS.map(p => {
+        const ready = !!p.src;
+        const tagHtml = p.tags.map(badge).join(' ');
+        const dateHtml = p.date ? `<span class="text-xs text-text-muted">${fmtDate(p.date)}</span>` : '';
+        const statusBadge = ready
+          ? ''
+          : `<span class="shrink-0 text-xs px-2 py-0.5 rounded-full bg-muted/40 text-text-muted border border-border">coming soon</span>`;
 
-// ═══════════════════════════════════════════════════════════════════════
-//  LIST VIEW
-// ═══════════════════════════════════════════════════════════════════════
-function renderList() {
-  document.title = 'Docs — Kioku Lite';
-  document.getElementById('nav-label').textContent = '// DOCS';
+        // If ready → clickable <a>; otherwise → inert <div>
+        const Tag = ready ? 'a' : 'div';
+        const href = ready ? `href="blog.html#${p.slug}"` : '';
+        const dim = ready ? '' : 'opacity-55 cursor-default';
 
-  const cards = POSTS.map(p => {
-    const ready   = !!p.src;
-    const tagHtml = p.tags.map(badge).join(' ');
-    const dateHtml = p.date ? `<span class="text-xs text-text-muted">${fmtDate(p.date)}</span>` : '';
-    const statusBadge = ready
-      ? ''
-      : `<span class="shrink-0 text-xs px-2 py-0.5 rounded-full bg-muted/40 text-text-muted border border-border">coming soon</span>`;
-
-    // If ready → clickable <a>; otherwise → inert <div>
-    const Tag  = ready ? 'a' : 'div';
-    const href = ready ? `href="blog.html#${p.slug}"` : '';
-    const dim  = ready ? '' : 'opacity-55 cursor-default';
-
-    return `
+        return `
       <${Tag} ${href} class="doc-card bg-surface border border-border rounded-2xl p-6 flex flex-col gap-3 ${dim}" style="text-decoration:none">
         <div class="flex items-start justify-between gap-3">
           <h2 class="text-sm font-bold text-text leading-snug">${p.title}</h2>
@@ -316,11 +470,11 @@ function renderList() {
         </div>
       </${Tag}>
     `;
-  }).join('');
+      }).join('');
 
-  const readyCount = POSTS.filter(p => p.src).length;
+      const readyCount = POSTS.filter(p => p.src).length;
 
-  document.getElementById('app').innerHTML = `
+      document.getElementById('app').innerHTML = `
     <!-- Hero -->
     <section class="pt-32 pb-10 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto text-center">
       <div class="inline-flex items-center gap-2 bg-accent/10 border border-accent/30
@@ -357,26 +511,26 @@ function renderList() {
       </div>
     </section>
   `;
-}
+    }
 
-// ═══════════════════════════════════════════════════════════════════════
-//  POST DETAIL VIEW
-// ═══════════════════════════════════════════════════════════════════════
-async function renderPost(slug) {
-  const post = POSTS.find(p => p.slug === slug);
+    // ═══════════════════════════════════════════════════════════════════════
+    //  POST DETAIL VIEW
+    // ═══════════════════════════════════════════════════════════════════════
+    async function renderPost(slug) {
+      const post = POSTS.find(p => p.slug === slug);
 
-  if (!post) {
-    return renderError('Post not found.', slug);
-  }
-  if (!post.src) {
-    return renderError(`"${post.title}" has no content yet — check back soon!`, slug);
-  }
+      if (!post) {
+        return renderError('Post not found.', slug);
+      }
+      if (!post.src) {
+        return renderError(`"${post.title}" has no content yet — check back soon!`, slug);
+      }
 
-  document.title = `${post.title} — Kioku Lite Docs`;
-  document.getElementById('nav-label').textContent = `// ${post.title.toUpperCase()}`;
+      document.title = `${post.title} — Kioku Lite Docs`;
+      document.getElementById('nav-label').textContent = `// ${post.title.toUpperCase()}`;
 
-  // Loading indicator
-  document.getElementById('app').innerHTML = `
+      // Loading indicator
+      document.getElementById('app').innerHTML = `
     <div class="pt-40 pb-24 flex flex-col items-center justify-center gap-4 text-text-muted">
       <svg class="w-6 h-6 text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
            style="animation:spin 1s linear infinite">
@@ -388,21 +542,28 @@ async function renderPost(slug) {
     <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
   `;
 
-  try {
-    const rawUrl = toRawUrl(post.src);
-    const res    = await fetch(rawUrl);
-    if (!res.ok) throw new Error(`HTTP ${res.status} — ${res.statusText}`);
+      try {
+        const rawUrl = toRawUrl(post.src);
+        const res = await fetch(rawUrl);
+        if (!res.ok) throw new Error(`HTTP ${res.status} — ${res.statusText}`);
 
-    const rawMd  = await res.text();
-    const md     = stripFrontMatter(rawMd);
-    const html   = marked.parse(md);
+        const rawMd = await res.text();
+        let md = stripFrontMatter(rawMd);
 
-    const tagHtml  = post.tags.map(badge).join(' ');
-    const dateHtml = post.date
-      ? `<span class="text-xs text-text-muted">${fmtDate(post.date)}</span>`
-      : '';
+        // Resolve relative image paths to absolute GitHub raw URLs
+        const srcDir = rawUrl.substring(0, rawUrl.lastIndexOf('/') + 1);
+        md = md.replace(/!\[([^\]]*)\]\((?!https?:\/\/)([^)]+)\)/g, (_, alt, path) => {
+          return `![${alt}](${srcDir}${path})`;
+        });
 
-    document.getElementById('app').innerHTML = `
+        const html = marked.parse(md);
+
+        const tagHtml = post.tags.map(badge).join(' ');
+        const dateHtml = post.date
+          ? `<span class="text-xs text-text-muted">${fmtDate(post.date)}</span>`
+          : '';
+
+        document.getElementById('app').innerHTML = `
       <div class="pt-28 pb-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
 
         <!-- Back (top) -->
@@ -461,25 +622,25 @@ async function renderPost(slug) {
       </div>
     `;
 
-    // Syntax highlight all code blocks (skip mermaid divs — those are not <pre><code>)
-    document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
+        // Syntax highlight all code blocks (skip mermaid divs — those are not <pre><code>)
+        document.querySelectorAll('#post-body pre code').forEach(el => hljs.highlightElement(el));
 
-    // Render mermaid diagrams
-    const mermaidNodes = document.querySelectorAll('#post-body .mermaid');
-    if (mermaidNodes.length > 0) {
-      mermaid.run({ nodes: mermaidNodes });
+        // Render mermaid diagrams
+        const mermaidNodes = document.querySelectorAll('#post-body .mermaid');
+        if (mermaidNodes.length > 0) {
+          mermaid.run({ nodes: mermaidNodes });
+        }
+
+      } catch (err) {
+        renderError(`Could not load content: ${err.message}`, slug);
+      }
     }
 
-  } catch (err) {
-    renderError(`Could not load content: ${err.message}`, slug);
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════════════
-//  ERROR VIEW
-// ═══════════════════════════════════════════════════════════════════════
-function renderError(msg) {
-  document.getElementById('app').innerHTML = `
+    // ═══════════════════════════════════════════════════════════════════════
+    //  ERROR VIEW
+    // ═══════════════════════════════════════════════════════════════════════
+    function renderError(msg) {
+      document.getElementById('app').innerHTML = `
     <div class="pt-40 pb-24 px-4 max-w-2xl mx-auto flex flex-col items-center gap-6 text-center">
       <svg viewBox="0 0 24 24" class="w-10 h-10 text-text-muted" fill="none" stroke="currentColor"
            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -498,21 +659,22 @@ function renderError(msg) {
       </a>
     </div>
   `;
-}
+    }
 
-// ═══════════════════════════════════════════════════════════════════════
-//  ROUTER  (hash-based: blog.html = list, blog.html#slug = detail)
-// ═══════════════════════════════════════════════════════════════════════
-function route() {
-  const slug = getSlug();
-  window.scrollTo(0, 0);
-  if (slug) renderPost(slug);
-  else      renderList();
-}
+    // ═══════════════════════════════════════════════════════════════════════
+    //  ROUTER  (hash-based: blog.html = list, blog.html#slug = detail)
+    // ═══════════════════════════════════════════════════════════════════════
+    function route() {
+      const slug = getSlug();
+      window.scrollTo(0, 0);
+      if (slug) renderPost(slug);
+      else renderList();
+    }
 
-window.addEventListener('hashchange', route);
-route();
-</script>
+    window.addEventListener('hashchange', route);
+    route();
+  </script>
 
 </body>
+
 </html>
