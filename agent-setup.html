@@ -7,6 +7,7 @@
   <meta name="description" content="Step-by-step guide to set up Kioku Lite with your AI agent (Claude Code, Cursor, Windsurf). Copy the full instructions and hand them to your agent." />
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -43,30 +44,25 @@
       background-size: 48px 48px;
     }
 
-    .code-block {
-      background: #0D1117;
-      border: 1px solid #22C55E33;
-      border-radius: 6px;
-    }
-
-    /* Syntax highlight in guide text */
-    pre { background: #0D1117; border: 1px solid #22C55E33; border-radius: 6px; padding: 1rem; overflow-x: auto; }
-    code { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: #22C55E; }
-    pre code { color: #F8FAFC; }
-
-    h2 { color: #F8FAFC; font-size: 1.1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
-    h3 { color: #94A3B8; font-size: 0.85rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.5rem; }
-    p { color: #94A3B8; font-size: 0.8rem; line-height: 1.8; margin-bottom: 0.75rem; }
-    ul, ol { color: #94A3B8; font-size: 0.8rem; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-    li { margin-bottom: 0.25rem; }
-    blockquote { border-left: 2px solid #22C55E; padding-left: 1rem; margin: 1rem 0; color: #94A3B8; font-size: 0.8rem; }
-    blockquote strong { color: #F8FAFC; }
-    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.75rem; }
-    th { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #334155; color: #94A3B8; }
-    td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #22222266; color: #94A3B8; }
-    td code { background: #0D1117; padding: 0.15rem 0.4rem; border-radius: 3px; color: #22C55E; font-size: 0.75rem; }
-    strong { color: #F8FAFC; }
-    hr { border: none; border-top: 1px solid #334155; margin: 2rem 0; }
+    /* Rendered markdown styles */
+    #guide-content pre { background: #0D1117; border: 1px solid #22C55E33; border-radius: 6px; padding: 1rem; overflow-x: auto; margin: 0.75rem 0; }
+    #guide-content code { font-family: 'Space Mono', monospace; font-size: 0.8rem; color: #22C55E; }
+    #guide-content pre code { color: #F8FAFC; }
+    #guide-content h1 { display: none; } /* title shown in hero */
+    #guide-content h2 { color: #F8FAFC; font-size: 1.1rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.75rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
+    #guide-content h3 { color: #94A3B8; font-size: 0.85rem; font-weight: 700; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+    #guide-content p { color: #94A3B8; font-size: 0.8rem; line-height: 1.8; margin-bottom: 0.75rem; }
+    #guide-content ul, #guide-content ol { color: #94A3B8; font-size: 0.8rem; line-height: 1.8; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+    #guide-content li { margin-bottom: 0.25rem; }
+    #guide-content blockquote { border-left: 2px solid #22C55E; padding-left: 1rem; margin: 1rem 0; color: #94A3B8; font-size: 0.8rem; }
+    #guide-content blockquote strong { color: #F8FAFC; }
+    #guide-content table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.75rem; }
+    #guide-content th { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid #334155; color: #94A3B8; }
+    #guide-content td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #22222266; color: #94A3B8; }
+    #guide-content td code, #guide-content th code { background: #0D1117; padding: 0.15rem 0.4rem; border-radius: 3px; color: #22C55E; font-size: 0.75rem; }
+    #guide-content strong { color: #F8FAFC; }
+    #guide-content hr { border: none; border-top: 1px solid #334155; margin: 2rem 0; }
+    #guide-content a { color: #22C55E; text-decoration: underline; }
 
     @media (prefers-reduced-motion: reduce) {
       * { animation: none !important; transition: none !important; }
@@ -80,7 +76,6 @@
   <nav class="fixed top-4 left-4 right-4 z-50 flex items-center justify-between
               bg-surface/80 backdrop-blur-sm border border-border/50
               rounded-xl px-5 py-3 max-w-5xl mx-auto">
-    <!-- Back to home -->
     <a href="index.html" class="flex items-center gap-2 cursor-pointer group" aria-label="Back to Kioku Lite home">
       <svg viewBox="0 0 24 24" class="w-4 h-4 text-text-muted group-hover:text-accent transition-colors" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M19 12H5M12 5l-7 7 7 7"/>
@@ -92,7 +87,6 @@
 
     <span class="text-xs text-text-muted tracking-widest hidden sm:block">// AGENT SETUP GUIDE</span>
 
-    <!-- Copy all button -->
     <button
       id="btn-copy-all"
       onclick="copyAll()"
@@ -114,7 +108,7 @@
     <div class="inline-flex items-center gap-2 bg-accent/10 border border-accent/30
                 text-accent text-xs px-4 py-1.5 rounded-full mb-6">
       <span class="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" aria-hidden="true"></span>
-      v0.1.17 · Claude Code · Cursor · Windsurf
+      Claude Code · Cursor · Windsurf
     </div>
     <h1 class="text-3xl sm:text-4xl font-bold leading-tight mb-4">
       Agent Setup Guide
@@ -123,7 +117,6 @@
       Copy this guide and hand it to your AI agent.
       It will install, configure, and activate Kioku Lite autonomously.
     </p>
-    <!-- Quick copy CTA -->
     <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
       <button
         onclick="copyAll()"
@@ -151,105 +144,13 @@
   <!-- ─── GUIDE CONTENT ─────────────────────────────────────────────── -->
   <main id="guide" class="pb-24 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto">
     <div class="bg-surface border border-border rounded-2xl p-8 sm:p-10">
-
-      <h2>Step 1 — Install Kioku Lite CLI <span class="text-xs text-text-muted font-normal">(once per machine)</span></h2>
-
-      <pre><code>pipx install "kioku-lite[cli]"</code></pre>
-
-      <blockquote>
-        If <code>pipx</code> is not available: <code>pip install pipx &amp;&amp; pipx ensurepath</code> then restart your terminal.
-      </blockquote>
-
-      <p>Verify install:</p>
-      <pre><code>kioku-lite --help</code></pre>
-
-      <hr>
-
-      <h2>Step 2 — Register Skill with your Agent <span class="text-xs text-text-muted font-normal">(once per agent)</span></h2>
-
-      <p>This teaches your agent <strong>how to use</strong> Kioku Lite across all projects:</p>
-
-      <pre><code>kioku-lite init --global</code></pre>
-
-      <p>Installs <code>~/.claude/skills/kioku-lite/SKILL.md</code> — auto-discovered in every project. Follow the printed instructions to complete workspace setup (Step 3).</p>
-
-      <hr>
-
-      <h2>Step 3 — Activate for a specific workspace</h2>
-
-      <p>Navigate to the directory where you want to use Kioku, then choose one option:</p>
-
-      <h3>Option A — No persona (generic schema)</h3>
-      <pre><code>cd ~/your-workspace
-kioku-lite init</code></pre>
-      <p>Creates: <code>AGENTS.md</code> in current directory + <code>.agents/skills/kioku-lite/SKILL.md</code></p>
-
-      <h3>Option B — With a built-in persona (recommended)</h3>
-      <pre><code>cd ~/your-workspace
-kioku-lite install-profile companion   # Emotional Companion
-# OR
-kioku-lite install-profile mentor      # Business &amp; Career Mentor</code></pre>
-      <p>Creates: <code>AGENTS.md</code> with Identity + Role + <code>~/.agents/skills/kioku-&lt;name&gt;/SKILL.md</code> with KG Schema.</p>
-
-      <hr>
-
-      <h2>Step 4 — Create a Kioku user profile</h2>
-
-      <p>Each user or persona should have a separate profile to isolate data:</p>
-
-      <pre><code>kioku-lite users --create mentor        # create profile
-kioku-lite users --use mentor           # activate it</code></pre>
-
-      <blockquote>Check: <code>kioku-lite users</code> → lists all profiles and shows which is active.</blockquote>
-
-      <hr>
-
-      <h2>Step 5 — Open your Agent and start</h2>
-
-      <pre><code>claude   # or cursor, windsurf, ...</code></pre>
-
-      <p>Say to your agent:</p>
-
-      <div class="code-block p-4 my-4">
-        <p class="text-accent text-sm font-bold">"Read AGENTS.md and the kioku-lite skill, then start a session for me."</p>
+      <div id="guide-content">
+        <!-- Loading state -->
+        <div id="loading" class="text-center py-12">
+          <span class="text-text-muted text-sm animate-pulse">Loading guide</span>
+          <span class="text-accent animate-pulse">_</span>
+        </div>
       </div>
-
-      <p>The agent will automatically:</p>
-      <ol>
-        <li>Read <code>AGENTS.md</code> → understand its role (companion / mentor / ...)</li>
-        <li>Read <code>SKILL.md</code> → know how to call the CLI</li>
-        <li>Run <code>kioku-lite users</code> → confirm active profile</li>
-        <li>Run <code>kioku-lite search "..."</code> → load past memory context</li>
-      </ol>
-
-      <hr>
-
-      <h2>Command Reference</h2>
-
-      <table>
-        <thead>
-          <tr><th>Command</th><th>When to use</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>pipx install "kioku-lite[cli]"</code></td><td>First install on a machine</td></tr>
-          <tr><td><code>kioku-lite init --global</code></td><td>Once per agent (global skill)</td></tr>
-          <tr><td><code>kioku-lite init</code></td><td>Each new workspace (no persona)</td></tr>
-          <tr><td><code>kioku-lite install-profile &lt;name&gt;</code></td><td>Each new workspace (with persona)</td></tr>
-          <tr><td><code>kioku-lite users --create &lt;id&gt;</code></td><td>Each new user or persona</td></tr>
-          <tr><td><code>kioku-lite users --use &lt;id&gt;</code></td><td>Switch active profile</td></tr>
-          <tr><td><code>pipx upgrade kioku-lite && kioku-lite init --global</code></td><td>When a new version is released</td></tr>
-        </tbody>
-      </table>
-
-      <hr>
-
-      <h2>Notes</h2>
-      <ul>
-        <li>Available profiles: <code>companion</code> (Emotional Companion), <code>mentor</code> (Business &amp; Career Mentor)</li>
-        <li>Data stored at: <code>~/.kioku-lite/users/&lt;profile_id&gt;/</code></li>
-        <li><strong>Language:</strong> Agent auto-detects and responds in the user's language. Entity names are stored in the original language; entity types always use English labels.</li>
-      </ul>
-
     </div>
   </main>
 
@@ -279,101 +180,32 @@ kioku-lite users --use mentor           # activate it</code></pre>
 
   <!-- ─── JS ────────────────────────────────────────────────────────── -->
   <script>
-    // The plain-text version of the guide for copying
-    const GUIDE_TEXT = `# Agent Setup Guide for Kioku Lite
-v0.1.17 | Compatible with: Claude Code, Cursor, Windsurf, and any agent supporting AGENTS.md / SKILL.md
+    const GUIDE_URL = 'https://raw.githubusercontent.com/phuc-nt/kioku-agent-kit-lite/main/docs/guides/setup-guide-for-general-agent.md';
+    let guideMarkdown = '';
 
----
-
-## Step 1 — Install Kioku Lite CLI (once per machine)
-
-\`\`\`bash
-pipx install "kioku-lite[cli]"
-\`\`\`
-
-If pipx is not available: pip install pipx && pipx ensurepath, then restart terminal.
-Verify: kioku-lite --help
-
----
-
-## Step 2 — Register Skill with your Agent (once per agent)
-
-\`\`\`bash
-kioku-lite init --global
-\`\`\`
-
-Installs ~/.claude/skills/kioku-lite/SKILL.md — auto-discovered in every project.
-Follow the printed instructions to complete workspace setup.
-
----
-
-## Step 3 — Activate for a specific workspace
-
-Option A — No persona:
-\`\`\`bash
-cd ~/your-workspace
-kioku-lite init
-\`\`\`
-
-Option B — With built-in persona (recommended):
-\`\`\`bash
-cd ~/your-workspace
-kioku-lite install-profile companion   # Emotional Companion
-# OR
-kioku-lite install-profile mentor      # Business & Career Mentor
-\`\`\`
-
----
-
-## Step 4 — Create a Kioku user profile
-
-\`\`\`bash
-kioku-lite users --create mentor
-kioku-lite users --use mentor
-\`\`\`
-
----
-
-## Step 5 — Open your Agent and start
-
-Open your agent (claude / cursor / windsurf) and say:
-"Read AGENTS.md and the kioku-lite skill, then start a session for me."
-
-The agent will:
-1. Read AGENTS.md → understand its role
-2. Read SKILL.md → know how to call the CLI
-3. Run kioku-lite users → confirm active profile
-4. Run kioku-lite search "..." → load past memory context
-
----
-
-## Command Reference
-
-| Command                                              | When to use                        |
-|------------------------------------------------------|------------------------------------|
-| pipx install "kioku-lite[cli]"                       | First install on a machine         |
-| kioku-lite init --global                             | Once per agent (global skill)      |
-| kioku-lite init                                      | Each new workspace (no persona)    |
-| kioku-lite install-profile <name>                    | Each new workspace (with persona)  |
-| kioku-lite users --create <id>                       | Each new user or persona           |
-| kioku-lite users --use <id>                          | Switch active profile              |
-| pipx upgrade kioku-lite && kioku-lite init --global  | When a new version is released     |
-
----
-
-Notes:
-- Available profiles: companion (Emotional Companion), mentor (Business & Career Mentor)
-- Data stored at: ~/.kioku-lite/users/<profile_id>/
-- Language: Agent auto-detects user's language. Entity names stored in original language; entity types use English labels.
-`;
+    fetch(GUIDE_URL)
+      .then(r => {
+        if (!r.ok) throw new Error('Failed to fetch');
+        return r.text();
+      })
+      .then(md => {
+        guideMarkdown = md;
+        document.getElementById('guide-content').innerHTML = marked.parse(md);
+      })
+      .catch(() => {
+        document.getElementById('guide-content').innerHTML = `
+          <p style="color:#94A3B8;font-size:0.8rem;">
+            Could not load guide.
+            <a href="${GUIDE_URL}" style="color:#22C55E;">View on GitHub ↗</a>
+          </p>`;
+      });
 
     function copyAll() {
-      navigator.clipboard.writeText(GUIDE_TEXT).then(() => {
-        // Update navbar button
+      if (!guideMarkdown) return;
+      navigator.clipboard.writeText(guideMarkdown).then(() => {
         const icon = document.getElementById('icon-copy-all');
         if (icon) icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>';
 
-        // Show confirm message
         const confirm = document.getElementById('copy-confirm');
         if (confirm) {
           confirm.style.opacity = '1';
