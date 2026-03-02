@@ -152,46 +152,48 @@
 //    • Raw URL : https://raw.githubusercontent.com/user/repo/branch/file.md
 //    • Blob URL: https://github.com/user/repo/blob/branch/file.md  (auto-convert)
 // ═══════════════════════════════════════════════════════════════════════
+const BASE = 'https://raw.githubusercontent.com/phuc-nt/kioku-agent-kit-lite/main/docs/architecture/';
+
 const POSTS = [
   {
-    slug: 'getting-started',
-    title: 'Getting Started',
-    date: '',            // ISO date, e.g. '2026-03-02'
-    desc: 'Hướng dẫn cài đặt và bắt đầu sử dụng Kioku Lite từ zero.',
-    tags: ['guide', 'install'],
-    src: '',             // TODO: paste GitHub markdown link here
+    slug: 'system-architecture',
+    title: 'System Architecture',
+    date: '2026-03-02',
+    desc: 'Tổng quan kiến trúc hệ thống: tri-hybrid search (BM25 + Vector + KG), data flow từ save → index → search → recall.',
+    tags: ['architecture', 'overview'],
+    src: BASE + '01-system.md',
   },
   {
-    slug: 'architecture',
-    title: 'Architecture Overview',
-    date: '',
-    desc: 'Kiến trúc tri-hybrid search: BM25 (SQLite FTS5) + Vector (FastEmbed) + Knowledge Graph (FalkorDB).',
-    tags: ['architecture', 'technical'],
-    src: '',             // TODO: paste GitHub markdown link here
+    slug: 'write-save-kg-index',
+    title: 'Write Architecture — Save & KG Index',
+    date: '2026-03-02',
+    desc: 'Chi tiết pipeline ghi dữ liệu: save memory vào SQLite FTS5 + sqlite-vec, sau đó agent tự kg-index entity & relationship.',
+    tags: ['architecture', 'write', 'kg'],
+    src: BASE + '02-write-save-kg-index.md',
   },
   {
-    slug: 'cli-reference',
-    title: 'CLI Reference',
-    date: '',
-    desc: 'Toàn bộ lệnh CLI: kioku add, search, relate, graph, export, serve…',
-    tags: ['reference', 'cli'],
-    src: '',             // TODO: paste GitHub markdown link here
+    slug: 'search-architecture',
+    title: 'Search Architecture',
+    date: '2026-03-02',
+    desc: 'Pipeline tìm kiếm tri-hybrid: BM25 keyword → vector semantic → KG traversal → Reciprocal Rank Fusion (RRF) reranker.',
+    tags: ['architecture', 'search', 'rrf'],
+    src: BASE + '03-search.md',
   },
   {
-    slug: 'mcp-server',
-    title: 'MCP Server Integration',
-    date: '',
-    desc: 'Cách kết nối Kioku Lite với Claude Code, Claude Desktop và các MCP-compatible agents.',
-    tags: ['guide', 'mcp', 'integration'],
-    src: '',             // TODO: paste GitHub markdown link here
+    slug: 'kg-open-schema',
+    title: 'KG Open Schema',
+    date: '2026-03-02',
+    desc: 'Mô hình entity & relationship mở: agent tự định nghĩa type, không ràng buộc schema cứng. Hỗ trợ alias, weight, metadata.',
+    tags: ['architecture', 'kg', 'schema'],
+    src: BASE + '04-kg-open-schema.md',
   },
   {
-    slug: 'changelog',
-    title: 'Changelog',
-    date: '',
-    desc: 'Lịch sử thay đổi, releases và breaking changes.',
-    tags: ['changelog'],
-    src: '',             // TODO: paste GitHub markdown link here
+    slug: 'memory-comparison',
+    title: 'Memory Comparison',
+    date: '2026-03-02',
+    desc: 'So sánh Kioku Lite vs Claude Code built-in memory vs OpenClaw: persistence, search quality, cost, và trade-off.',
+    tags: ['comparison', 'overview'],
+    src: BASE + '05-memory-comparison.md',
   },
 ];
 
