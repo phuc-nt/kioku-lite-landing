@@ -442,7 +442,7 @@
   Base: viewBox="0 0 56 56", circle r=22 spans y=6..50 (44px of 56)
   Cap-height ≈ 46px → svg height = 46×56/44 = 59px (T-01 reference)
   Position via CSS transform on the SVG (layout-neutral, does not affect flex baseline)
-  • T-01 BASE     — h=59, translateY(0)   : icon bottom at baseline
+  • T-01 BASE     — w=55 h=71 (×1.2 cap-h), translateY(+10px), monochrome terracotta
   • T-02 RAISED   — h=59, translateY(-24px): icon floats 24px above baseline
   • T-03 SINKING  — h=59, translateY(22px) : icon descends 22px below baseline
   • T-04 OVERSIZED — h=100, translateY(0)  : icon ×1.7 cap-height, dominates
@@ -463,9 +463,9 @@
       <div class="flex items-start justify-between">
         <div>
           <p class="text-xs text-accent tracking-widest mb-0.5">// T-01 · BASE</p>
-          <p class="text-xs font-bold mt-0.5" style="color:#6B6560">Space Mono 700 · cap-height</p>
+          <p class="text-xs font-bold mt-0.5" style="color:#6B6560">Space Mono 700 · ×1.2 cap-height · ↓10px</p>
           <p class="text-xs text-text-muted mt-1 max-w-xs leading-relaxed">
-            Điểm xuất phát. Icon to ngang cap-height, đáy icon ngang baseline chữ.
+            Màu đồng điệu (monochrome terracotta). Icon ×1.2 cap-height, chìm 10px dưới baseline.
           </p>
         </div>
         <div class="bg-white rounded-lg p-2 shrink-0 flex items-center justify-center" style="width:48px;height:48px;">
@@ -474,23 +474,23 @@
           </svg>
         </div>
       </div>
-      <div class="flex justify-center">
+      <div class="flex justify-center" style="overflow:visible;padding-bottom:14px;">
         <div style="display:inline-flex;align-items:baseline;font-family:'Space Mono',monospace;font-weight:700;font-size:72px;line-height:1;">
-          <span style="color:#131314">ki</span>
-          <svg viewBox="0 0 56 56" width="46" height="59" style="color:#D97757;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+          <span style="color:#D97757">ki</span>
+          <svg viewBox="0 0 56 56" width="55" height="71" style="color:#D97757;flex-shrink:0;display:block;transform:translateY(10px);" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#131314">ku</span>
+          <span style="color:#D97757">ku</span>
         </div>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-xs text-text-muted tracking-widest">small</span>
-        <div style="display:inline-flex;align-items:baseline;font-family:'Space Mono',monospace;font-weight:700;font-size:24px;line-height:1;">
-          <span style="color:#131314">ki</span>
-          <svg viewBox="0 0 56 56" width="15" height="20" style="color:#D97757;flex-shrink:0;display:block;" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
+        <div style="display:inline-flex;align-items:baseline;font-family:'Space Mono',monospace;font-weight:700;font-size:24px;line-height:1;padding-bottom:4px;">
+          <span style="color:#D97757">ki</span>
+          <svg viewBox="0 0 56 56" width="18" height="24" style="color:#D97757;flex-shrink:0;display:block;transform:translateY(3px);" preserveAspectRatio="xMidYMid meet" fill="none" stroke="currentColor" aria-hidden="true">
             <use href="#icon-organic"/>
           </svg>
-          <span style="color:#131314">ku</span>
+          <span style="color:#D97757">ku</span>
         </div>
       </div>
       <button onclick="copyIconSvg(0,this)"
